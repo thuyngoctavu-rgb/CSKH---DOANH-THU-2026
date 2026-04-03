@@ -30,8 +30,15 @@ body{font-family:"Segoe UI",system-ui,Arial,sans-serif;background:#f0f4f8;color:
 .sbtn{flex:1;padding:9px;background:#3b82f6;color:#fff;border:none;border-radius:7px;font-size:12px;font-weight:700;cursor:pointer}
 .scancelbtn{padding:9px 14px;background:#f1f5f9;border:none;border-radius:7px;font-size:12px;cursor:pointer}
 
+/* ── MAIN TITLE BAR ── */
+.main-title-bar{background:#fff;border-bottom:1px solid #e2e8f0;position:sticky;top:0;z-index:201;
+  padding:8px 20px 6px;text-align:center}
+.main-title-bar h1{font-size:15px;font-weight:800;letter-spacing:1.8px;color:#1e3a8a;
+  margin:0;text-transform:uppercase;line-height:1}
+.main-title-bar span{font-size:10px;color:#64748b;font-weight:500;letter-spacing:.5px}
+
 /* ── MONTH TABS ── */
-.month-nav{background:#fff;border-bottom:1px solid #e2e8f0;position:sticky;top:0;z-index:200;
+.month-nav{background:#fff;border-bottom:1px solid #e2e8f0;position:sticky;top:47px;z-index:200;
   display:flex;align-items:center;overflow-x:auto;padding:0 16px;
   box-shadow:0 2px 8px rgba(0,0,0,.06)}
 .month-nav::-webkit-scrollbar{height:4px}
@@ -39,6 +46,7 @@ body{font-family:"Segoe UI",system-ui,Arial,sans-serif;background:#f0f4f8;color:
 .mtab{padding:12px 16px;white-space:nowrap;font-size:12px;font-weight:600;cursor:pointer;
   border-bottom:3px solid transparent;color:#64748b;transition:all .18s;flex-shrink:0}
 .mtab:hover{color:#3b82f6}
+.mtab.tongtket-active{color:#f59e0b!important;border-bottom-color:#f59e0b!important}
 .mtab.active{color:#2563eb;border-bottom-color:#2563eb;font-weight:800}
 .mtab.no-data{color:#cbd5e1;cursor:default}
 .nav-right{margin-left:auto;display:flex;align-items:center;gap:8px;flex-shrink:0;padding-left:12px}
@@ -111,6 +119,27 @@ body{font-family:"Segoe UI",system-ui,Arial,sans-serif;background:#f0f4f8;color:
 /* ── STICKY TABLE HEADER ── */
 .dtbl thead th{position:sticky;top:0;z-index:2;background:#f8fafc}
 
+/* ── OVERVIEW SECTION ── */
+.ov-table{width:100%;border-collapse:collapse;font-size:11px}
+.ov-table th{background:#1e3a8a;color:#fff;padding:9px 12px;text-align:left;font-size:10px;
+  font-weight:700;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;
+  position:sticky;top:0;z-index:2}
+.ov-table th.num{text-align:right}
+.ov-table td{padding:9px 12px;border-bottom:1px solid #f1f5f9;vertical-align:middle;white-space:nowrap}
+.ov-table tr:hover td{background:#f8fafc}
+.ov-table tr.ov-active td{background:#eff6ff;font-weight:700}
+.ov-table tr.ov-nodata td{color:#cbd5e1;background:#fafafa}
+.ov-table .ov-month{font-weight:800;color:#1e293b;font-size:12px}
+.ov-table .ov-month.active{color:#2563eb}
+.ov-delta{font-size:9px;font-weight:700;margin-left:4px}
+.ov-delta.up{color:#16a34a}.ov-delta.down{color:#dc2626}.ov-delta.flat{color:#94a3b8}
+.ov-summary-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.ov-sum-card{flex:1;min-width:140px;background:#f8fafc;border:1px solid #e2e8f0;
+  border-radius:8px;padding:10px 14px}
+.ov-sum-label{font-size:9px;font-weight:800;text-transform:uppercase;color:#94a3b8;margin-bottom:4px}
+.ov-sum-val{font-size:15px;font-weight:900;color:#1e293b}
+.ov-sum-sub{font-size:10px;color:#64748b;margin-top:2px}
+
 /* ── 2-COL GRID ── */
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .grid2-60{display:grid;grid-template-columns:58% 42%;gap:14px}
@@ -152,6 +181,78 @@ body{font-family:"Segoe UI",system-ui,Arial,sans-serif;background:#f0f4f8;color:
 .cmp-mp{font-size:9px;font-weight:700;margin-top:3px}
 .cmp-mp.ok{color:#16a34a}.cmp-mp.warn{color:#d97706}.cmp-mp.bad{color:#dc2626}
 .cmp-mp.nd{color:#cbd5e1}
+
+/* ── ANNUAL OVERVIEW SECTION ── */
+.anv-wrap{background:linear-gradient(135deg,#0f172a 0%,#1e3a8a 50%,#0f172a 100%);
+  border-radius:16px;margin-bottom:16px;overflow:hidden;border:1px solid rgba(255,255,255,.08)}
+.anv-header{padding:22px 24px 0;display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.anv-title-block .anv-eyebrow{font-size:10px;font-weight:800;letter-spacing:1.5px;
+  text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:6px}
+.anv-title-block h2{font-size:20px;font-weight:900;color:#fff;margin-bottom:4px}
+.anv-title-block .anv-subtitle{font-size:11px;color:rgba(255,255,255,.5)}
+.anv-year-progress{text-align:right}
+.anv-year-pct{font-size:36px;font-weight:900;line-height:1}
+.anv-year-pct.good{color:#4ade80}.anv-year-pct.mid{color:#fbbf24}.anv-year-pct.low{color:#f87171}
+.anv-year-sub{font-size:10px;color:rgba(255,255,255,.5);margin-top:4px}
+
+.anv-kpi-row{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;
+  background:rgba(255,255,255,.06);margin:20px 0 0}
+.anv-kpi{padding:16px 20px;background:#0f172a}
+.anv-kpi:first-child{background:rgba(255,255,255,.04)}
+.anv-kpi-lbl{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;
+  color:rgba(255,255,255,.35);margin-bottom:8px}
+.anv-kpi-val{font-size:20px;font-weight:900;color:#fff;line-height:1;margin-bottom:3px}
+.anv-kpi-sub{font-size:10px;color:rgba(255,255,255,.45)}
+.anv-kpi-badge{display:inline-flex;align-items:center;gap:3px;padding:2px 7px;
+  border-radius:99px;font-size:9px;font-weight:800;margin-top:5px}
+.anv-kpi-badge.green{background:rgba(74,222,128,.18);color:#4ade80}
+.anv-kpi-badge.amber{background:rgba(251,191,36,.18);color:#fbbf24}
+.anv-kpi-badge.red  {background:rgba(248,113,113,.18);color:#f87171}
+.anv-kpi-badge.blue {background:rgba(147,197,253,.18);color:#93c5fd}
+
+.anv-body{padding:20px 24px 24px}
+.anv-chart-row{display:grid;grid-template-columns:2fr 1fr;gap:16px;margin-bottom:20px}
+.anv-chart-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
+  border-radius:10px;padding:14px 16px}
+.anv-chart-title{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.6px;
+  color:rgba(255,255,255,.5);margin-bottom:12px}
+.anv-progress-bar{margin-bottom:12px}
+.anv-pb-label{display:flex;justify-content:space-between;font-size:10px;
+  color:rgba(255,255,255,.5);margin-bottom:4px}
+.anv-pb-track{height:10px;background:rgba(255,255,255,.1);border-radius:99px;overflow:hidden}
+.anv-pb-fill{height:100%;border-radius:99px;transition:width .5s ease}
+.anv-insight-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.anv-insight{border-radius:10px;padding:13px 15px;border-left:3px solid}
+.anv-insight.strength{background:rgba(34,197,94,.1);border-color:#22c55e}
+.anv-insight.warning{background:rgba(251,191,36,.1);border-color:#fbbf24}
+.anv-insight.danger {background:rgba(248,113,113,.1);border-color:#f87171}
+.anv-insight.info   {background:rgba(147,197,253,.12);border-color:#60a5fa}
+.anv-insight-title{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.7px;margin-bottom:7px}
+.anv-insight.strength .anv-insight-title{color:#4ade80}
+.anv-insight.warning  .anv-insight-title{color:#fbbf24}
+.anv-insight.danger   .anv-insight-title{color:#f87171}
+.anv-insight.info     .anv-insight-title{color:#93c5fd}
+.anv-insight ul{padding-left:13px;margin:0}
+.anv-insight ul li{font-size:11px;color:rgba(255,255,255,.8);line-height:1.75}
+.anv-insight ul li b{color:#fff}
+.anv-forecast-table{width:100%;border-collapse:collapse;font-size:10px;margin-top:10px}
+.anv-forecast-table th{color:rgba(255,255,255,.4);font-weight:700;text-transform:uppercase;
+  font-size:9px;letter-spacing:.5px;padding:6px 10px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left}
+.anv-forecast-table th.r{text-align:right}
+.anv-forecast-table td{padding:7px 10px;border-bottom:1px solid rgba(255,255,255,.05);color:rgba(255,255,255,.75)}
+.anv-forecast-table tr:last-child td{border-bottom:none}
+.anv-forecast-table .actual{color:#4ade80;font-weight:700}
+.anv-forecast-table .forecast{color:#fbbf24;font-style:italic}
+.anv-forecast-table .total-row td{color:#fff;font-weight:900;border-top:1px solid rgba(255,255,255,.15)}
+
+@media(max-width:900px){
+  .anv-kpi-row{grid-template-columns:repeat(3,1fr)}
+  .anv-chart-row{grid-template-columns:1fr}
+  .anv-insight-grid{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+  .anv-kpi-row{grid-template-columns:repeat(2,1fr)}
+}
 
 /* ── FOOTER SECTION ── */
 .footer-sec{background:#1e3a8a;border-radius:12px;margin-bottom:20px;overflow:hidden}
@@ -358,6 +459,12 @@ body{font-family:"Segoe UI",system-ui,Arial,sans-serif;background:#f0f4f8;color:
   </div>
 </div>
 
+<!-- MAIN TITLE BAR -->
+<div class="main-title-bar">
+  <h1>DOANH THU CSKH 2026</h1>
+  <span>Phòng Chăm Sóc Khách Hàng · Phúc Tea</span>
+</div>
+
 <!-- MONTH TABS -->
 <div class="month-nav" id="month-nav">
   <!-- rendered by JS -->
@@ -375,6 +482,66 @@ body{font-family:"Segoe UI",system-ui,Arial,sans-serif;background:#f0f4f8;color:
 
 <!-- MAIN CONTENT -->
 <div class="content">
+
+  <!-- ── ANNUAL OVERVIEW BOD ── -->
+  <div class="anv-wrap" id="anv-section">
+    <!-- Header -->
+    <div class="anv-header">
+      <div class="anv-title-block">
+        <div class="anv-eyebrow">📊 Báo Cáo Phòng CSKH – Phúc Tea</div>
+        <h2>Tổng Kết & Dự Báo Năm 2026</h2>
+        <div class="anv-subtitle" id="anv-subtitle">Phân tích tổng hợp 12 tháng · T1–T4 thực tế · T5–T12 theo kế hoạch</div>
+      </div>
+      <div class="anv-year-progress">
+        <div class="anv-year-pct" id="anv-year-pct">--</div>
+        <div class="anv-year-sub">% KH năm đã hoàn thành<br><span id="anv-months-done">-- tháng có dữ liệu</span></div>
+      </div>
+    </div>
+    <!-- KPI Strip -->
+    <div class="anv-kpi-row" id="anv-kpi-row"></div>
+    <!-- Body -->
+    <div class="anv-body">
+      <div class="anv-chart-row">
+        <!-- Annual chart -->
+        <div class="anv-chart-card">
+          <div class="anv-chart-title">📈 Doanh Thu 12 Tháng – Thực Tế vs KH (Thanh Xanh = TT · Vàng đứt = KH)</div>
+          <div style="height:220px;position:relative"><canvas id="anv-bar-chart"></canvas></div>
+        </div>
+        <!-- Progress by channel -->
+        <div class="anv-chart-card">
+          <div class="anv-chart-title">🎯 Tiến Độ Năm Theo Kênh</div>
+          <div id="anv-channel-progress"></div>
+          <div class="anv-chart-title" style="margin-top:16px">👥 Tiến Độ Nhân Sự (T1–T4)</div>
+          <div id="anv-staff-progress"></div>
+        </div>
+      </div>
+      <!-- Forecast table -->
+      <div class="anv-chart-card" style="margin-bottom:16px">
+        <div class="anv-chart-title">📋 Bảng Dự Báo 12 Tháng – Thực Tế & Kế Hoạch Còn Lại</div>
+        <div style="overflow-x:auto"><table class="anv-forecast-table" id="anv-forecast-table"></table></div>
+      </div>
+      <!-- Strategic insights -->
+      <div class="anv-insight-grid" id="anv-insights"></div>
+    </div>
+  </div>
+
+  <div id="monthly-sections">
+  <!-- ── OVERVIEW ALL MONTHS ── -->
+  <div class="section" style="margin-bottom:16px">
+    <div class="sec-hdr">
+      <div class="sec-hdr-icon" style="background:#e0f2fe">📋</div>
+      <div class="sec-title">Tổng Quan Tất Cả Các Tháng 2026</div>
+    </div>
+    <div class="sec-body">
+      <!-- Summary KPI bar -->
+      <div class="ov-summary-row" id="ov-summary-row"></div>
+      <!-- Main overview table -->
+      <div style="overflow-x:auto">
+        <table class="ov-table" id="ov-table"></table>
+      </div>
+
+    </div>
+  </div>
 
   <!-- ── KPI ROW ── -->
   <div class="kpi-grid" id="kpi-row"></div>
@@ -595,31 +762,32 @@ body{font-family:"Segoe UI",system-ui,Arial,sans-serif;background:#f0f4f8;color:
     </div>
   </div>
 
+  </div><!-- /monthly-sections -->
 </div><!-- end .content -->
 
 <script>
 // ══════════════════════════════════════════════════════════
 //  DATA (static fallback – updated via Google Sheet sync)
 // ══════════════════════════════════════════════════════════
-let KH_MONTH      = [1508094315, 1275416906, 1525329679, 1406449863];
-let DAYS_IN_MONTH = [31, 28, 31, 30];
-let MONTH_TOTAL   = [982577000, 831078760, 958499420, 27298000];
-let MONTH_ORDERS  = [6797, 5269, 6360, 174];
-let MONTH_DISC    = [54535000, 48240000, 56002670, 1517000];
-let CH_REV   = [[625406000,308609000,48562000],[549832900,230750980,50494880],[684348080,222713340,51438000],[19459000,5388000,2451000]];
+let KH_MONTH      = [1508094315,1275416906,1525329679,1406449863,1406449863,1385458074,1329876576,1392214541,1433773184,1495346265,1430331210,1408659525];
+let DAYS_IN_MONTH = [31,28,31,30,31,30,31,31,30,31,30,31];
+let MONTH_TOTAL   = [982577000, 831078760, 958499420, 54326000];
+let MONTH_ORDERS  = [6797, 5269, 6360, 375];
+let MONTH_DISC    = [54535000, 48240000, 56002670, 2809000];
+let CH_REV   = [[625406000,308609000,48562000],[549832900,230750980,50494880],[684348080,222713340,51438000],[38481000,11855000,3990000]];
 let CH_ORDERS= [[3663,2683,451],[3014,1818,437],[4151,1774,435],[105,50,19]];
-let EMP_REV  = [[218089000,122545000,209496000,211943000,120577000,99927000],[195827700,25292380,219476620,202403880,106847680,81230500],[299386500,0,211633060,212867740,229049120,5563000],[10769000,0,3699000,7477000,5353000,0]];
-let DAILY    = {"0":{"1":20179000,"2":37730000,"3":36010000,"4":23813000,"5":29379000,"6":30228000,"7":29668000,"8":26796000,"9":39686000,"10":34548000,"11":20531000,"12":36563000,"13":33122000,"14":33597000,"15":35852000,"16":38688000,"17":36419000,"18":16909000,"19":50349000,"20":33933000,"21":26445000,"22":26752000,"23":30541000,"24":32902000,"25":17473000,"26":29554000,"27":36278000,"28":32488000,"29":32988000,"30":34745000,"31":38411000},"1":{"1":18857000,"2":42157000,"3":39205000,"4":32821000,"5":38977000,"6":32342000,"7":36776000,"8":23512000,"9":50677000,"10":59245000,"11":54395000,"12":52821000,"13":38197000,"14":20443000,"15":13124000,"16":6478500,"17":7919680,"18":10438080,"19":7945000,"20":12916640,"21":11980860,"22":12900000,"23":34570000,"24":33759000,"25":29268000,"26":32805000,"27":32369000,"28":44180000},"2":{"1":12796000,"2":32862000,"3":31289000,"4":25637000,"5":28127000,"6":50241470,"7":89135210,"8":34885440,"9":37124300,"10":43644000,"11":28475000,"12":34472000,"13":27129000,"14":35333000,"15":16653000,"16":26805000,"17":23518000,"18":27565000,"19":28202000,"20":32190000,"21":34583000,"22":20667000,"23":27297000,"24":26416000,"25":26723000,"26":29958000,"27":26595000,"28":30671000,"29":16353000,"30":24166000,"31":28987000},"3":{"1":27298000}};
-const DAILY_ORDERS = {"0":{"1":178,"2":268,"3":271,"4":201,"5":209,"6":219,"7":232,"8":201,"9":268,"10":250,"11":174,"12":250,"13":203,"14":235,"15":228,"16":256,"17":254,"18":170,"19":176,"20":212,"21":188,"22":187,"23":219,"24":216,"25":160,"26":199,"27":263,"28":217,"29":223,"30":247,"31":223},"1":{"1":200,"2":247,"3":233,"4":212,"5":227,"6":186,"7":247,"8":198,"9":299,"10":330,"11":302,"12":319,"13":244,"14":176,"15":132,"16":54,"17":51,"18":64,"19":57,"20":102,"21":100,"22":113,"23":184,"24":207,"25":173,"26":187,"27":197,"28":228},"2":{"1":124,"2":202,"3":203,"4":177,"5":189,"6":235,"7":351,"8":233,"9":220,"10":245,"11":213,"12":236,"13":216,"14":219,"15":151,"16":189,"17":185,"18":210,"19":202,"20":216,"21":236,"22":181,"23":196,"24":202,"25":200,"26":214,"27":198,"28":195,"29":153,"30":176,"31":193},"3":{"1":174}};
-const HOURLY_ORDERS = {"0":{"0":42,"20":172,"19":355,"18":331,"17":252,"16":274,"15":468,"14":733,"13":777,"12":657,"11":876,"10":926,"9":629,"8":197,"1":106,"7":2},"1":{"0":327,"1":86,"20":109,"19":193,"18":188,"17":148,"16":184,"15":377,"14":493,"13":595,"12":505,"11":644,"10":695,"9":550,"8":174,"7":1},"2":{"20":140,"19":303,"18":280,"17":209,"16":282,"15":415,"14":621,"13":748,"12":599,"11":895,"10":889,"9":645,"8":260,"7":2,"21":1,"1":52,"0":19},"3":{"7":1,"20":7,"8":4,"19":16,"18":8,"17":7,"16":5,"15":9,"14":16,"13":23,"12":18,"11":28,"10":20,"9":12}};
-const HOURLY_REV = {"0":{"0":7421000,"20":19315000,"19":36322000,"18":31194000,"17":25600000,"16":27170000,"15":50234000,"14":92919000,"13":104849000,"12":97525000,"11":140964000,"10":153501000,"9":111972000,"8":36454000,"1":19852000,"7":27285000},"1":{"0":56767000,"1":19729000,"20":13917040,"19":22550000,"18":22883100,"17":15492800,"16":18505960,"15":41404960,"14":71408520,"13":81169580,"12":80243520,"11":112206280,"10":130557080,"9":107966860,"8":36215060,"7":62000},"2":{"20":13550000,"19":31471000,"18":28859000,"17":20145000,"16":29403000,"15":48375500,"14":83561750,"13":107145900,"12":81651820,"11":148170440,"10":170766620,"9":124398300,"8":47818090,"7":478000,"21":278000,"1":8519000,"0":13908000},"3":{"7":1068000,"20":2687000,"8":966000,"19":1273000,"18":731000,"17":805000,"16":439000,"15":679000,"14":1641000,"13":2795000,"12":3520000,"11":5273000,"10":2836000,"9":2585000}};
+let EMP_REV  = [[218089000,122545000,209496000,211943000,120577000,99927000],[195827700,25292380,219476620,202403880,106847680,81230500],[299386500,0,211633060,212867740,229049120,5563000],[20659000,0,3699000,19305000,10663000,0]];
+let DAILY    = {"0":{"1":20179000,"2":37730000,"3":36010000,"4":23813000,"5":29379000,"6":30228000,"7":29668000,"8":26796000,"9":39686000,"10":34548000,"11":20531000,"12":36563000,"13":33122000,"14":33597000,"15":35852000,"16":38688000,"17":36419000,"18":16909000,"19":50349000,"20":33933000,"21":26445000,"22":26752000,"23":30541000,"24":32902000,"25":17473000,"26":29554000,"27":36278000,"28":32488000,"29":32988000,"30":34745000,"31":38411000},"1":{"1":18857000,"2":42157000,"3":39205000,"4":32821000,"5":38977000,"6":32342000,"7":36776000,"8":23512000,"9":50677000,"10":59245000,"11":54395000,"12":52821000,"13":38197000,"14":20443000,"15":13124000,"16":6478500,"17":7919680,"18":10438080,"19":7945000,"20":12916640,"21":11980860,"22":12900000,"23":34570000,"24":33759000,"25":29268000,"26":32805000,"27":32369000,"28":44180000},"2":{"1":12796000,"2":32862000,"3":31289000,"4":25637000,"5":28127000,"6":50241470,"7":89135210,"8":34885440,"9":37124300,"10":43644000,"11":28475000,"12":34472000,"13":27129000,"14":35333000,"15":16653000,"16":26805000,"17":23518000,"18":27565000,"19":28202000,"20":32190000,"21":34583000,"22":20667000,"23":27297000,"24":26416000,"25":26723000,"26":29958000,"27":26595000,"28":30671000,"29":16353000,"30":24166000,"31":28987000},"3":{"1":27298000,"2":27028000}};
+const DAILY_ORDERS = {"0":{"1":178,"2":268,"3":271,"4":201,"5":209,"6":219,"7":232,"8":201,"9":268,"10":250,"11":174,"12":250,"13":203,"14":235,"15":228,"16":256,"17":254,"18":170,"19":176,"20":212,"21":188,"22":187,"23":219,"24":216,"25":160,"26":199,"27":263,"28":217,"29":223,"30":247,"31":223},"1":{"1":200,"2":247,"3":233,"4":212,"5":227,"6":186,"7":247,"8":198,"9":299,"10":330,"11":302,"12":319,"13":244,"14":176,"15":132,"16":54,"17":51,"18":64,"19":57,"20":102,"21":100,"22":113,"23":184,"24":207,"25":173,"26":187,"27":197,"28":228},"2":{"1":124,"2":202,"3":203,"4":177,"5":189,"6":235,"7":351,"8":233,"9":220,"10":245,"11":213,"12":236,"13":216,"14":219,"15":151,"16":189,"17":185,"18":210,"19":202,"20":216,"21":236,"22":181,"23":196,"24":202,"25":200,"26":214,"27":198,"28":195,"29":153,"30":176,"31":193},"3":{"1":178,"2":197}};
+const HOURLY_ORDERS = {"0":{"0":42,"20":172,"19":355,"18":331,"17":252,"16":274,"15":468,"14":733,"13":777,"12":657,"11":876,"10":926,"9":629,"8":197,"1":106,"7":2},"1":{"0":327,"1":86,"20":109,"19":193,"18":188,"17":148,"16":184,"15":377,"14":493,"13":595,"12":505,"11":644,"10":695,"9":550,"8":174,"7":1},"2":{"20":140,"19":303,"18":280,"17":209,"16":282,"15":415,"14":621,"13":748,"12":599,"11":895,"10":889,"9":645,"8":260,"7":2,"21":1,"1":52,"0":19},"3":{"7":1,"8":11,"9":26,"10":62,"11":47,"12":35,"13":49,"14":41,"15":22,"16":12,"17":18,"18":16,"19":26,"20":9}};
+const HOURLY_REV = {"0":{"0":7421000,"20":19315000,"19":36322000,"18":31194000,"17":25600000,"16":27170000,"15":50234000,"14":92919000,"13":104849000,"12":97525000,"11":140964000,"10":153501000,"9":111972000,"8":36454000,"1":19852000,"7":27285000},"1":{"0":56767000,"1":19729000,"20":13917040,"19":22550000,"18":22883100,"17":15492800,"16":18505960,"15":41404960,"14":71408520,"13":81169580,"12":80243520,"11":112206280,"10":130557080,"9":107966860,"8":36215060,"7":62000},"2":{"20":13550000,"19":31471000,"18":28859000,"17":20145000,"16":29403000,"15":48375500,"14":83561750,"13":107145900,"12":81651820,"11":148170440,"10":170766620,"9":124398300,"8":47818090,"7":478000,"21":278000,"1":8519000,"0":13908000},"3":{"7":1068000,"8":2198000,"9":5874000,"10":9305000,"11":8196000,"12":5928000,"13":4862000,"14":4500000,"15":2124000,"16":1824000,"17":1743000,"18":1383000,"19":2578000,"20":2743000}};
 let EMP_KH_DETAIL = [
-  [305389099,258271924,308879260,284806097],
-  [305389099,127541691,0,0],
-  [305389099,258271924,308879260,284806097],
-  [305389099,258271924,308879260,284806097],
-  [150809432,258271924,308879260,284806097],
-  [135728488,114787522,0,0],
+  [305389099,258271924,308879260,284806097,284806097,280555260,269300007,281923444,290339070,302807619,289642070,285253554],
+  [305389099,258271924,0,0,0,0,0,0,0,0,0,0],
+  [305389099,258271924,308879260,284806097,284806097,280555260,269300007,281923444,290339070,302807619,289642070,285253554],
+  [305389099,258271924,308879260,284806097,284806097,280555260,269300007,281923444,290339070,302807619,289642070,285253554],
+  [150809432,127541691,152532968,140644986,140644986,138545807,132987658,139221454,143377318,149534627,143033121,140865953],
+  [135728488,114787522,0,0,0,0,0,0,0,0,0,0],
 ];
 // ── BRANCH DATA (54 chi nhánh, tổng hợp T1–T4/2026) ─────
 const BRANCH_DATA = [{"name":"NGUYỄN AN NINH DĨ AN","total":441676940,"zalo":391648100,"fanpage":46638840,"hotline":3390000,"months":[155513000,132055000,150099940,4009000]},{"name":"AN TÂY","total":306116700,"zalo":206267700,"fanpage":92263000,"hotline":7586000,"months":[114353000,74012000,114593700,3158000]},{"name":"MỸ PHƯỚC 2 BẾN CÁT","total":176926000,"zalo":129369000,"fanpage":35783000,"hotline":11774000,"months":[62787000,57121000,54931000,2087000]},{"name":"MỸ PHƯỚC 3 BẾN CÁT","total":174703250,"zalo":143312550,"fanpage":26587700,"hotline":4803000,"months":[61419000,44877000,66841250,1566000]},{"name":"VĨNH TÂN","total":172018800,"zalo":120119800,"fanpage":49647000,"hotline":2252000,"months":[58727000,45966000,66569800,756000]},{"name":"BÀU BÀNG","total":163184600,"zalo":106396600,"fanpage":53465000,"hotline":3323000,"months":[48896000,58590000,54763600,935000]},{"name":"MỸ PHƯỚC BẾN CÁT","total":135530300,"zalo":102553500,"fanpage":27673800,"hotline":5303000,"months":[41912000,42238000,50405300,975000]},{"name":"ĐỨC HÒA TÂY NINH","total":125876100,"zalo":89455100,"fanpage":34760000,"hotline":1661000,"months":[52728000,23905000,47947100,1296000]},{"name":"THỚI HÒA BẾN CÁT","total":121231670,"zalo":91507670,"fanpage":21186000,"hotline":8538000,"months":[39420000,37623000,42147670,2041000]},{"name":"BÌNH MINH","total":98993600,"zalo":55183500,"fanpage":26714100,"hotline":17096000,"months":[26535000,33467200,38543400,448000]},{"name":"BẾN LỨC","total":88117000,"zalo":58142000,"fanpage":23291000,"hotline":6684000,"months":[40623000,23092000,24172000,230000]},{"name":"HÀ LAM","total":77762250,"zalo":24800750,"fanpage":46152500,"hotline":6809000,"months":[24879000,20410000,31882250,591000]},{"name":"PHÚ TÀI","total":63429160,"zalo":24482400,"fanpage":31968280,"hotline":6978480,"months":[19599000,27478160,15772000,580000]},{"name":"NINH PHƯỚC","total":54660000,"zalo":21872000,"fanpage":25506000,"hotline":7282000,"months":[14216000,25764000,14485000,195000]},{"name":"PHAN RANG","total":54288500,"zalo":23825500,"fanpage":25718000,"hotline":4745000,"months":[20119000,20400000,13687500,82000]},{"name":"Ô MÔN","total":44661000,"zalo":21529000,"fanpage":15671000,"hotline":7461000,"months":[14214000,16735000,12864000,848000]},{"name":"CẦU TRÀM","total":42884000,"zalo":27177000,"fanpage":13306000,"hotline":2401000,"months":[19106000,12599000,11071000,108000]},{"name":"TÔN ĐỨC THẮNG LONG THÀNH","total":36386000,"zalo":26038000,"fanpage":7916000,"hotline":2432000,"months":[19399000,8258000,8729000,0]},{"name":"TRỊ AN","total":36241750,"zalo":23417750,"fanpage":11076000,"hotline":1748000,"months":[11927000,10237000,13995750,82000]},{"name":"PHÚ LỢI THỦ DẦU MỘT","total":33378100,"zalo":22786000,"fanpage":8552100,"hotline":2040000,"months":[10688000,10256000,12125100,309000]},{"name":"TÔN ĐỨC THẮNG CAO LÃNH","total":30082000,"zalo":9063000,"fanpage":15883000,"hotline":5136000,"months":[7406000,13781000,8434000,461000]},{"name":"ĐINH ĐỨC THIỆN BÌNH CHÁNH","total":29795000,"zalo":16626000,"fanpage":10974000,"hotline":2195000,"months":[10261000,8826000,10520000,188000]},{"name":"BÌNH TÂN VĨNH LONG","total":28887400,"zalo":15167000,"fanpage":5737000,"hotline":7983400,"months":[8574000,12177400,7708000,428000]},{"name":"PHÚ CHÁNH","total":23453000,"zalo":14771000,"fanpage":8252000,"hotline":430000,"months":[9312000,6704000,7296000,141000]},{"name":"CÁI TẮC","total":22069960,"zalo":11085960,"fanpage":8265000,"hotline":2719000,"months":[8463000,4015000,8523960,1068000]},{"name":"HÙNG VƯƠNG ĐỒNG XOÀI","total":21659000,"zalo":6745000,"fanpage":12891000,"hotline":2023000,"months":[7363000,7491000,6581000,224000]},{"name":"THÍCH QUẢNG ĐỨC LONG KHÁNH","total":19439000,"zalo":7192000,"fanpage":10559000,"hotline":1688000,"months":[6674000,3206000,9424000,135000]},{"name":"ĐOÀN THỊ ĐIỂM XUÂN LỘC","total":19295000,"zalo":9088000,"fanpage":7797000,"hotline":2410000,"months":[7052000,5403000,6698000,142000]},{"name":"BÌNH CHÂU","total":17247000,"zalo":6832000,"fanpage":9127000,"hotline":1288000,"months":[5823000,6195000,5179000,50000]},{"name":"HỒ THỊ THƯỞNG THỚI LAI","total":16871100,"zalo":8093100,"fanpage":6140000,"hotline":2638000,"months":[5553000,5249000,5904100,165000]},{"name":"TRẦN HOÀNG NA CẦN THƠ","total":15316000,"zalo":9252000,"fanpage":5034000,"hotline":1030000,"months":[6967000,4765000,3426000,158000]},{"name":"TÂN PHƯỚC KHÁNH","total":15307000,"zalo":12073000,"fanpage":2545000,"hotline":689000,"months":[5724000,3305000,6278000,0]},{"name":"CẦN THƠ","total":15216000,"zalo":6988000,"fanpage":6978000,"hotline":1250000,"months":[5337000,6672000,3069000,138000]},{"name":"CHƠN THÀNH","total":10735000,"zalo":5135000,"fanpage":4385000,"hotline":1215000,"months":[3960000,2471000,4304000,0]},{"name":"LÊ LỢI LAI VUNG","total":9116000,"zalo":3785000,"fanpage":4744000,"hotline":587000,"months":[4608000,2244000,2236000,28000]},{"name":"CHỬ ĐỒNG TỬ TÂN BÌNH","total":7351000,"zalo":4403000,"fanpage":2401000,"hotline":547000,"months":[2123000,1748000,1102000,2378000]},{"name":"VĨNH AN","total":7185000,"zalo":5262000,"fanpage":1385000,"hotline":538000,"months":[1978000,2102000,3045000,60000]},{"name":"VÕ NGUYÊN GIÁP TRÀ VINH","total":6719000,"zalo":929000,"fanpage":4669000,"hotline":1121000,"months":[3094000,2745000,757000,123000]},{"name":"AN NHƠN","total":5906000,"zalo":3260000,"fanpage":2027000,"hotline":619000,"months":[2066000,1312000,2528000,0]},{"name":"THẠNH PHÚ VĨNH CỬU","total":4995000,"zalo":2847000,"fanpage":1853000,"hotline":295000,"months":[0,0,3880000,1115000]},{"name":"THUẬN AN","total":3957000,"zalo":1713000,"fanpage":2069000,"hotline":175000,"months":[3957000,0,0,0]},{"name":"BÌNH SƠN LONG THÀNH","total":3771000,"zalo":1104000,"fanpage":2667000,"hotline":0,"months":[1502000,1288000,981000,0]},{"name":"TRẢNG DÀI","total":2850000,"zalo":1639000,"fanpage":234000,"hotline":977000,"months":[333000,1470000,1047000,0]},{"name":"GÒ CÔNG TÂY","total":2666000,"zalo":1941000,"fanpage":432000,"hotline":293000,"months":[686000,1136000,844000,0]},{"name":"THỦ ĐỨC","total":2292000,"zalo":738000,"fanpage":1554000,"hotline":0,"months":[1461000,743000,88000,0]},{"name":"VÕ OANH BÌNH THẠNH","total":2285000,"zalo":790000,"fanpage":1495000,"hotline":0,"months":[682000,335000,1268000,0]},{"name":"HÒA LẠC HÀ NỘI","total":2137000,"zalo":1257000,"fanpage":756000,"hotline":124000,"months":[1110000,64000,963000,0]},{"name":"TRÀ ÔN","total":1343000,"zalo":88000,"fanpage":809000,"hotline":446000,"months":[1282000,61000,0,0]},{"name":"NGUYỄN VĂN KHỐI GÒ VẤP","total":1311000,"zalo":690000,"fanpage":621000,"hotline":0,"months":[713000,341000,257000,0]},{"name":"THỐT NỐT","total":1025000,"zalo":161000,"fanpage":771000,"hotline":93000,"months":[879000,146000,0,0]},{"name":"VĨNH THẠNH","total":558000,"zalo":198000,"fanpage":360000,"hotline":0,"months":[198000,0,360000,0]},{"name":"ĐỖ XUÂN HỢP","total":347000,"zalo":45000,"fanpage":172000,"hotline":130000,"months":[175000,0,172000,0]},{"name":"AN THỚI PHÚ QUỐC","total":110000,"zalo":110000,"fanpage":0,"hotline":0,"months":[110000,0,0,0]}];
@@ -633,7 +801,7 @@ const EMP_NAMES    = ["Phúc Tea - 002 Ngọc","Phúc Tea - 006 Lộc","Phúc Te
 const EMP_FULL     = ["Châu Thúy Ngọc","Bá Lộc","Thái Tài","Ngọc Trinh","Huỳnh Lan Anh","Yến Xuân"];
 const EMP_FULL_LONG= ["Châu Thúy Ngọc","Bá Lộc","Hà Văn Thái Tài","Nguyễn Ngọc Trinh","Ng. Huỳnh Lan Anh","Ng. Ngô Yến Xuân"];
 const EMP_RESIGNED     = [false,true,false,false,false,true];
-const EMP_RESIGN_MONTH = [null,4,null,null,null,4];
+const EMP_RESIGN_MONTH = [null,3,null,null,null,3];
 const MONTH_LABELS = ["Tháng 1","Tháng 2","Tháng 3","Tháng 4","Tháng 5","Tháng 6","Tháng 7","Tháng 8","Tháng 9","Tháng 10","Tháng 11","Tháng 12"];
 const HAS_DATA     = [true,true,true,true,false,false,false,false,false,false,false,false];
 
@@ -645,7 +813,7 @@ function getKhDay(m, d){
   if(KH_DAILY[m] && KH_DAILY[m][d] !== undefined) return KH_DAILY[m][d];
   return KH_MONTH[m] / DAYS_IN_MONTH[m]; // phân bổ đều
 }
-let activeMon    = 2; // 0-based, default T3
+let activeMon    = 3; // 0-based, default T4
 let branchView   = 'total'; // 'total' | 'zalo'
 let branchMonth  = -1;      // -1 = tất cả, 0-3 = T1-T4
 let branchDay    = 0;       // 0 = tất cả ngày, 1-31 = ngày cụ thể
@@ -682,6 +850,9 @@ function mkChart(id,cfg){
 function buildMonthNav(){
   const nav = document.getElementById('month-nav');
   let html = '';
+  // Tab Tổng Kết
+  const isAnv = activeMon === -1;
+  html += `<div class="mtab ${isAnv?'active':''}" onclick="setAnnualView()" style="color:${isAnv?'#f59e0b':'#64748b'};border-bottom:3px solid ${isAnv?'#f59e0b':'transparent'}">📊 Tổng Kết</div>`;
   for(let m=0;m<12;m++){
     const hasD = HAS_DATA[m];
     const cls  = (m===activeMon?'active':'') + (hasD?'':' no-data');
@@ -689,14 +860,24 @@ function buildMonthNav(){
   }
   html += `<div class="nav-right">
     <span class="conn-dot ${SCRIPT_URL?(LAST_UPDATED?'ok':'off'):'off'}" id="cdot"></span>
+    <span id="refresh-countdown" style="font-size:10px;color:#94a3b8;margin-left:4px"></span>
     <button class="btn-sync" onclick="syncData()">🔄 Sync</button>
     <button class="btn-cfg" onclick="openSettings()" title="Cài đặt Google Sheet">⚙️</button>
   </div>`;
   nav.innerHTML = html;
 }
 
+function setAnnualView(){
+  activeMon = -1;
+  document.getElementById('monthly-sections').style.display = 'none';
+  document.getElementById('anv-section').style.display = 'block';
+  buildMonthNav();
+}
+
 function setMonth(m){
   activeMon = m;
+  document.getElementById('monthly-sections').style.display = 'block';
+  document.getElementById('anv-section').style.display = 'none';
   document.querySelectorAll('.mtab').forEach(el=>{
     el.classList.toggle('active', +el.dataset.m === m);
   });
@@ -706,6 +887,12 @@ function setMonth(m){
 // ── INFO BAR ─────────────────────────────────────────────
 function updateInfoBar(){
   const m = activeMon;
+  if(m < 0){
+    document.getElementById('ib-month').textContent  = 'Tổng Kết 2026';
+    document.getElementById('ib-orders').textContent = fmtVND(MONTH_ORDERS.reduce((a,b)=>a+b,0));
+    document.getElementById('ib-kh').textContent     = fmtVND(KH_MONTH.reduce((a,b)=>a+b,0)) + 'đ';
+    return;
+  }
   document.getElementById('ib-month').textContent  = MONTH_LABELS[m] + '/2026';
   document.getElementById('ib-orders').textContent = fmtVND(MONTH_ORDERS[m]);
   document.getElementById('ib-kh').textContent     = fmtVND(KH_MONTH[m]) + 'đ';
@@ -1541,9 +1728,368 @@ function renderBranch(){
       '<div style="grid-column:1/-1;font-size:12px;color:#94a3b8;text-align:center;padding:16px">Chọn tháng/ngày để xem nhận định chi tiết</div>';
   }
 }
+// ── ANNUAL OVERVIEW BOD ──────────────────────────────────
+function renderAnnualOverview(){
+  const dataIdxs   = HAS_DATA.map((h,i)=>h?i:null).filter(v=>v!==null);
+  const totalActual = dataIdxs.reduce((s,i)=>s+MONTH_TOTAL[i],0);
+  const totalOrders = dataIdxs.reduce((s,i)=>s+MONTH_ORDERS[i],0);
+  const totalDisc   = dataIdxs.reduce((s,i)=>s+(MONTH_DISC[i]||0),0);
+
+  // Full-year KH (all 12 months, 0 if not set)
+  const fullKH = Array.from({length:12},(_,i)=>KH_MONTH[i]||0);
+  const totalKH_year = fullKH.reduce((a,b)=>a+b,0);
+  // Remaining KH = sum of KH for months without data
+  const remainKH = Array.from({length:12},(_,i)=>HAS_DATA[i]?0:fullKH[i]).reduce((a,b)=>a+b,0);
+  const projTotal = totalActual + remainKH; // if 100% KH for remaining months
+  const yearPct   = totalKH_year>0 ? pct(totalActual,totalKH_year) : 0;
+  const avgMonthPct = dataIdxs.length>0
+    ? dataIdxs.reduce((s,i)=>s+pct(MONTH_TOTAL[i],fullKH[i]||1),0)/dataIdxs.length : 0;
+
+  // ── Year % heading ─────────────────────────────────────
+  const ypEl = document.getElementById('anv-year-pct');
+  ypEl.textContent = yearPct.toFixed(1)+'%';
+  ypEl.className = 'anv-year-pct '+(yearPct>=70?'good':yearPct>=40?'mid':'low');
+  document.getElementById('anv-months-done').textContent =
+    dataIdxs.length+' tháng có dữ liệu / 12 tháng';
+  document.getElementById('anv-subtitle').textContent =
+    `T1–T4 thực tế · T5–T12 theo KH đã nhập · Cập nhật ${new Date().toLocaleDateString('vi-VN')}`;
+
+  // ── KPI strip ─────────────────────────────────────────
+  const badge = (txt,cls)=>`<span class="anv-kpi-badge ${cls}">${txt}</span>`;
+  const needToReach = Math.max(0, totalKH_year - totalActual);
+  document.getElementById('anv-kpi-row').innerHTML = `
+    <div class="anv-kpi">
+      <div class="anv-kpi-lbl">Tổng DT Thực Tế</div>
+      <div class="anv-kpi-val">${fmtM(totalActual)}</div>
+      <div class="anv-kpi-sub">${fmtVND(totalActual)}đ</div>
+      ${badge(dataIdxs.length+' tháng có dữ liệu','blue')}
+    </div>
+    <div class="anv-kpi">
+      <div class="anv-kpi-lbl">Tổng KH Cả Năm</div>
+      <div class="anv-kpi-val">${fmtM(totalKH_year)}</div>
+      <div class="anv-kpi-sub">${fmtVND(totalKH_year)}đ</div>
+      ${badge('KH đã nhập: '+fullKH.filter(v=>v>0).length+'/12 tháng','amber')}
+    </div>
+    <div class="anv-kpi">
+      <div class="anv-kpi-lbl">Cần Đạt Thêm</div>
+      <div class="anv-kpi-val">${fmtM(needToReach)}</div>
+      <div class="anv-kpi-sub">để hoàn thành KH năm</div>
+      ${badge(remainKH>0?'T'+(dataIdxs.length+1)+'–T12 còn '+fmtM(remainKH):'Đủ dữ liệu','amber')}
+    </div>
+    <div class="anv-kpi">
+      <div class="anv-kpi-lbl">Tổng Đơn Hàng</div>
+      <div class="anv-kpi-val">${fmtVND(totalOrders)}</div>
+      <div class="anv-kpi-sub">TB/đơn: ${fmtVND(totalOrders>0?Math.round(totalActual/totalOrders):0)}đ</div>
+      ${badge('TB '+Math.round(totalOrders/Math.max(dataIdxs.length,1))+' đơn/tháng','blue')}
+    </div>
+    <div class="anv-kpi">
+      <div class="anv-kpi-lbl">% Đạt KH TB/Tháng</div>
+      <div class="anv-kpi-val">${avgMonthPct.toFixed(1)}%</div>
+      <div class="anv-kpi-sub">Giảm giá: ${fmtM(totalDisc)} (${pct(totalDisc,totalActual).toFixed(1)}%)</div>
+      ${badge(avgMonthPct>=80?'Tốt':avgMonthPct>=60?'Trung bình':'Cần cải thiện', avgMonthPct>=80?'green':avgMonthPct>=60?'amber':'red')}
+    </div>`;
+
+  // ── Annual bar chart ──────────────────────────────────
+  mkChart('anv-bar-chart',{
+    type:'bar',
+    data:{
+      labels:Array.from({length:12},(_,i)=>'T'+(i+1)),
+      datasets:[
+        {label:'Thực Tế',
+          data:Array.from({length:12},(_,i)=>HAS_DATA[i]?MONTH_TOTAL[i]:null),
+          backgroundColor:'rgba(59,130,246,.85)',borderRadius:5,borderWidth:0,yAxisID:'y'},
+        {label:'Dự Báo (KH)',
+          data:Array.from({length:12},(_,i)=>!HAS_DATA[i]&&fullKH[i]>0?fullKH[i]:null),
+          backgroundColor:'rgba(251,191,36,.35)',borderRadius:5,borderWidth:0,yAxisID:'y'},
+        {label:'KH',
+          data:fullKH.map((v,i)=>v>0?v:null),
+          type:'line',borderColor:'rgba(251,191,36,.7)',borderDash:[5,3],
+          borderWidth:1.5,pointRadius:2,fill:false,tension:.3,yAxisID:'y'}
+      ]
+    },
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:true,position:'top',
+        labels:{color:'rgba(255,255,255,.65)',font:{size:9},boxWidth:10,padding:10}},
+        tooltip:{callbacks:{label:c=>` ${c.dataset.label}: ${c.raw?fmtVND(c.raw)+'đ':'--'}`}}},
+      scales:{
+        x:{grid:{display:false},ticks:{color:'rgba(255,255,255,.5)',font:{size:10}}},
+        y:{grid:{color:'rgba(255,255,255,.06)'},
+          ticks:{color:'rgba(255,255,255,.4)',font:{size:9},callback:v=>fmtShort(v)}}
+      }}
+  });
+
+  // ── Channel progress bars ─────────────────────────────
+  const chTotals  = [0,1,2].map(ci=>dataIdxs.reduce((s,i)=>s+(CH_REV[i]?CH_REV[i][ci]:0),0));
+  const chKHs     = [0,1,2].map(ci=>dataIdxs.reduce((s,i)=>s+Math.round((fullKH[i]||0)*CH_KH_PCT[ci]),0));
+  const chColors  = ['#60a5fa','#fb923c','#4ade80'];
+  document.getElementById('anv-channel-progress').innerHTML = CH_NAMES.map((n,ci)=>{
+    const p2   = chKHs[ci]>0?pct(chTotals[ci],chKHs[ci]):0;
+    const bw   = Math.min(p2,100);
+    const col  = chColors[ci];
+    return `<div class="anv-progress-bar">
+      <div class="anv-pb-label">
+        <span style="color:${col};font-weight:700">${n}</span>
+        <span style="color:rgba(255,255,255,.6)">${fmtM(chTotals[ci])} / ${fmtM(chKHs[ci])} · <b style="color:${p2>=80?'#4ade80':'#fbbf24'}">${p2.toFixed(1)}%</b></span>
+      </div>
+      <div class="anv-pb-track">
+        <div class="anv-pb-fill" style="width:${bw}%;background:${col}"></div>
+      </div>
+    </div>`;
+  }).join('');
+
+  // ── Staff progress bars (active only) ────────────────
+  const activeStaff = EMP_NAMES.map((_,i)=>i).filter(i=>!EMP_RESIGNED[i]);
+  const empYearRev  = activeStaff.map(i=>dataIdxs.reduce((s,m)=>s+(EMP_REV[m]?EMP_REV[m][i]||0:0),0));
+  const empYearKH   = activeStaff.map(i=>dataIdxs.reduce((s,m)=>s+(EMP_KH_DETAIL[i]?EMP_KH_DETAIL[i][m]||0:0),0));
+  const maxEmpRev   = Math.max(...empYearRev,1);
+  document.getElementById('anv-staff-progress').innerHTML = activeStaff.map((si,ri)=>{
+    const p2  = empYearKH[ri]>0?pct(empYearRev[ri],empYearKH[ri]):0;
+    const bw  = Math.round(empYearRev[ri]/maxEmpRev*100);
+    const col = p2>=100?'#4ade80':p2>=70?'#60a5fa':'#fbbf24';
+    return `<div class="anv-progress-bar">
+      <div class="anv-pb-label">
+        <span style="color:rgba(255,255,255,.8);font-weight:700;font-size:10px">${EMP_FULL[si]}</span>
+        <span style="color:rgba(255,255,255,.5);font-size:9px">${fmtM(empYearRev[ri])} · <b style="color:${col}">${p2.toFixed(0)}% KH</b></span>
+      </div>
+      <div class="anv-pb-track">
+        <div class="anv-pb-fill" style="width:${bw}%;background:${col}"></div>
+      </div>
+    </div>`;
+  }).join('');
+
+  // ── Forecast table ────────────────────────────────────
+  let tRows = '';
+  let cumActual = 0, cumKH = 0;
+  for(let m=0;m<12;m++){
+    const kh  = fullKH[m]||0;
+    const act = HAS_DATA[m]?MONTH_TOTAL[m]:null;
+    const isActual = HAS_DATA[m];
+    cumActual += act||0;
+    cumKH     += kh;
+    const p2  = kh>0&&act!==null?pct(act,kh):null;
+    const cumP= cumKH>0?pct(cumActual,cumKH):0;
+    const pbCol = p=>p>=100?'#4ade80':p>=70?'#fbbf24':'#f87171';
+    tRows += `<tr>
+      <td style="font-weight:700;color:${isActual?'rgba(255,255,255,.9)':'rgba(255,255,255,.4)'};width:50px">T${m+1}</td>
+      <td class="${isActual?'actual':'forecast'} r">${isActual&&act!==null?fmtVND(act)+'đ':'-- (dự kiến KH)'}</td>
+      <td class="r" style="color:rgba(255,255,255,.5)">${kh>0?fmtVND(kh)+'đ':'Chưa nhập'}</td>
+      <td class="r">${p2!==null?`<span style="color:${pbCol(p2)};font-weight:800">${p2.toFixed(1)}%</span>`:'<span style="color:rgba(255,255,255,.3)">--</span>'}</td>
+      <td class="r" style="color:rgba(255,255,255,.5)">${isActual?fmtVND(MONTH_ORDERS[m])+' đơn':'--'}</td>
+      <td class="r" style="color:rgba(255,255,255,.4);font-size:9px">${fmtM(cumActual)} / ${fmtM(cumKH)} <span style="color:${pbCol(cumP)}"> (${cumP.toFixed(1)}%)</span></td>
+    </tr>`;
+  }
+  tRows += `<tr class="total-row">
+    <td>TỔNG</td>
+    <td class="r" style="color:#4ade80">${fmtVND(totalActual)}đ TT</td>
+    <td class="r" style="color:#fbbf24">${totalKH_year>0?fmtVND(totalKH_year)+'đ KH':'Chưa đủ KH'}</td>
+    <td class="r"><span style="color:${yearPct>=70?'#4ade80':'#f87171'};font-size:13px;font-weight:900">${yearPct.toFixed(1)}%</span></td>
+    <td class="r" style="color:#fff">${fmtVND(totalOrders)} đơn</td>
+    <td class="r" style="color:rgba(255,255,255,.6)">Còn ${fmtM(needToReach)} để đạt KH</td>
+  </tr>`;
+  document.getElementById('anv-forecast-table').innerHTML =
+    `<thead><tr>
+      <th>THÁNG</th><th class="r">DOANH THU TT</th><th class="r">KH THÁNG</th>
+      <th class="r">% ĐẠT</th><th class="r">SỐ ĐƠN</th><th class="r">LŨY KẾ NĂM</th>
+    </tr></thead><tbody>${tRows}</tbody>`;
+
+  // ── Strategic insights ────────────────────────────────
+  const need8mo    = Math.max(0,totalKH_year-totalActual);
+  const moRemain   = 12 - dataIdxs.length;
+  const needPerMo  = moRemain>0 ? need8mo/moRemain : 0;
+  const bestMIdx   = dataIdxs.reduce((a,b)=>MONTH_TOTAL[a]>=MONTH_TOTAL[b]?a:b,dataIdxs[0]);
+  const trend3mo   = dataIdxs.length>=3
+    ? (MONTH_TOTAL[dataIdxs[dataIdxs.length-1]]-MONTH_TOTAL[dataIdxs[0]])/dataIdxs[0]*100 : 0;
+
+  document.getElementById('anv-insights').innerHTML = `
+    <div class="anv-insight ${yearPct>=60?'strength':'danger'}">
+      <div class="anv-insight-title">${yearPct>=60?'💪 Tiến Độ Năm':'⚠️ Cảnh Báo Tiến Độ'}</div>
+      <ul>
+        <li>Đã hoàn thành <b>${yearPct.toFixed(1)}%</b> KH năm sau <b>${dataIdxs.length} tháng</b></li>
+        <li>Thực tế: <b>${fmtVND(totalActual)}đ</b> / KH năm: ${fmtVND(totalKH_year)}đ</li>
+        <li>${yearPct>=60?'Tiến độ ổn định – cần duy trì tốc độ':'Tiến độ thấp – cần tăng tốc ngay các tháng tới'}</li>
+      </ul>
+    </div>
+    <div class="anv-insight ${needPerMo<=MONTH_TOTAL[bestMIdx]?'info':'warning'}">
+      <div class="anv-insight-title">🎯 Mục Tiêu Còn Lại T${dataIdxs.length+1}–T12</div>
+      <ul>
+        <li>Cần thêm <b>${fmtVND(need8mo)}đ</b> trong <b>${moRemain} tháng</b> còn lại</li>
+        <li>TB mỗi tháng phải đạt: <b>${fmtM(needPerMo)}đ</b></li>
+        <li>${needPerMo<=MONTH_TOTAL[bestMIdx]?'Khả thi nếu duy trì phong độ tháng tốt nhất':'Thách thức – cần chiến lược đột phá doanh thu'}</li>
+      </ul>
+    </div>
+    <div class="anv-insight ${avgMonthPct>=70?'strength':'warning'}">
+      <div class="anv-insight-title">📊 Hiệu Suất Trung Bình</div>
+      <ul>
+        <li>% đạt KH TB: <b>${avgMonthPct.toFixed(1)}%/tháng</b> – ${avgMonthPct>=80?'Tốt ✅':avgMonthPct>=60?'Trung bình ⚠️':'Thấp ❌'}</li>
+        <li>Tháng tốt nhất: <b>${MONTH_LABELS[bestMIdx]}</b> (${fmtM(MONTH_TOTAL[bestMIdx])}, ${pct(MONTH_TOTAL[bestMIdx],fullKH[bestMIdx]||1).toFixed(1)}% KH)</li>
+        <li>${avgMonthPct<70?'Cần tăng hiệu suất lên tối thiểu 70%/tháng để bù tiến độ':'Tiếp tục cải thiện để đẩy lên 80%+'}</li>
+      </ul>
+    </div>
+    <div class="anv-insight info">
+      <div class="anv-insight-title">🚀 Khuyến Nghị Chiến Lược</div>
+      <ul>
+        <li>Kênh Zalo Phòng đóng góp <b>${pct(chTotals[0],totalActual).toFixed(0)}%</b> DT – duy trì và mở rộng file CS</li>
+        <li>${totalDisc>0?'Giảm giá chiếm '+pct(totalDisc,totalActual).toFixed(1)+'% – kiểm soát để bảo vệ biên lợi nhuận':'Giảm giá ở mức kiểm soát tốt'}</li>
+        <li>Nhập đủ KH T5–T12 để theo dõi tiến độ chính xác</li>
+      </ul>
+    </div>`;
+}
+
+// ── OVERVIEW ALL MONTHS ──────────────────────────────────
+function renderOverview(){
+  const dataIdxs = HAS_DATA.map((h,i)=>h?i:null).filter(v=>v!==null);
+
+  // ── Summary cards ─────────────────────────────────────
+  const totalRev  = dataIdxs.reduce((s,i)=>s+MONTH_TOTAL[i],0);
+  const totalKH   = dataIdxs.reduce((s,i)=>s+KH_MONTH[i],0);
+  const totalOrd  = dataIdxs.reduce((s,i)=>s+MONTH_ORDERS[i],0);
+  const totalDisc = dataIdxs.reduce((s,i)=>s+(MONTH_DISC[i]||0),0);
+  const avgPctAll = dataIdxs.length>0
+    ? dataIdxs.reduce((s,i)=>s+pct(MONTH_TOTAL[i],KH_MONTH[i]),0)/dataIdxs.length : 0;
+  const bestMIdx  = dataIdxs.reduce((a,b)=>MONTH_TOTAL[a]>=MONTH_TOTAL[b]?a:b, dataIdxs[0]);
+
+  document.getElementById('ov-summary-row').innerHTML = `
+    <div class="ov-sum-card">
+      <div class="ov-sum-label">Tổng Doanh Thu ${dataIdxs.length} Tháng</div>
+      <div class="ov-sum-val">${fmtM(totalRev)}</div>
+      <div class="ov-sum-sub">${fmtVND(totalRev)}đ</div>
+    </div>
+    <div class="ov-sum-card">
+      <div class="ov-sum-label">Tổng KH ${dataIdxs.length} Tháng</div>
+      <div class="ov-sum-val">${fmtM(totalKH)}</div>
+      <div class="ov-sum-sub">% đạt TB: <b style="color:${avgPctAll>=80?'#16a34a':'#dc2626'}">${avgPctAll.toFixed(1)}%</b></div>
+    </div>
+    <div class="ov-sum-card">
+      <div class="ov-sum-label">Tổng Số Đơn</div>
+      <div class="ov-sum-val">${fmtVND(totalOrd)}</div>
+      <div class="ov-sum-sub">TB/đơn: ${fmtVND(totalOrd>0?Math.round(totalRev/totalOrd):0)}đ</div>
+    </div>
+    <div class="ov-sum-card">
+      <div class="ov-sum-label">Tổng Giảm Giá</div>
+      <div class="ov-sum-val">${fmtM(totalDisc)}</div>
+      <div class="ov-sum-sub">${pct(totalDisc,totalRev).toFixed(1)}% doanh thu</div>
+    </div>
+    <div class="ov-sum-card">
+      <div class="ov-sum-label">Tháng Tốt Nhất</div>
+      <div class="ov-sum-val" style="font-size:13px;color:#2563eb">${MONTH_LABELS[bestMIdx]}</div>
+      <div class="ov-sum-sub">${fmtVND(MONTH_TOTAL[bestMIdx])}đ · ${pct(MONTH_TOTAL[bestMIdx],KH_MONTH[bestMIdx]).toFixed(1)}% KH</div>
+    </div>`;
+
+  // ── Main table ────────────────────────────────────────
+  const pbCol = p=>p>=100?'#16a34a':p>=70?'#d97706':'#dc2626';
+  const pbBg  = p=>p>=100?'#dcfce7':p>=70?'#fef3c7':'#fee2e2';
+  const delta = (cur,prev)=>{
+    if(!prev||prev===0) return '';
+    const d = pct(cur-prev,prev);
+    const cls = d>0?'up':d<0?'down':'flat';
+    const sym = d>0?'▲':'▼';
+    return `<span class="ov-delta ${cls}">${sym}${Math.abs(d).toFixed(1)}%</span>`;
+  };
+
+  let rows = '';
+  for(let m=0;m<12;m++){
+    const hasD  = HAS_DATA[m];
+    const isAct = m===activeMon;
+    if(!hasD){
+      rows += `<tr class="ov-nodata">
+        <td onclick="HAS_DATA[${m}]&&setMonth(${m})" style="cursor:default">
+          <span class="ov-month">T${m+1}</span>
+          <div style="font-size:9px;color:#cbd5e1;margin-top:2px">${MONTH_LABELS[m]}</div>
+        </td>
+        <td colspan="10" style="text-align:center;color:#cbd5e1;font-size:10px">Chưa có dữ liệu</td>
+      </tr>`;
+      continue;
+    }
+    const rev   = MONTH_TOTAL[m];
+    const kh    = KH_MONTH[m];
+    const p2    = pct(rev,kh);
+    const ord   = MONTH_ORDERS[m];
+    const disc  = MONTH_DISC[m]||0;
+    const chRev = CH_REV[m]||[0,0,0];
+    const prevRev = m>0&&HAS_DATA[m-1]?MONTH_TOTAL[m-1]:null;
+    const prevOrd = m>0&&HAS_DATA[m-1]?MONTH_ORDERS[m-1]:null;
+    // Top staff this month
+    const empRevM = EMP_REV[m]||[];
+    const activeEmpRevs = empRevM.map((v,i)=>EMP_RESIGNED[i]?0:v);
+    const topEmpI = activeEmpRevs.indexOf(Math.max(...activeEmpRevs));
+    const barW = Math.min(p2,100);
+
+    rows += `<tr class="${isAct?'ov-active':''}" onclick="setMonth(${m})" style="cursor:pointer">
+      <td>
+        <span class="ov-month${isAct?' active':''}">T${m+1}</span>
+        <div style="font-size:9px;color:#94a3b8;margin-top:1px">${MONTH_LABELS[m]}</div>
+        ${isAct?'<span style="font-size:8px;background:#2563eb;color:#fff;padding:1px 5px;border-radius:10px">Đang xem</span>':''}
+      </td>
+      <td class="num" style="font-weight:700;color:#1e293b">
+        ${fmtVND(rev)}đ
+        ${prevRev!==null?delta(rev,prevRev):''}
+      </td>
+      <td class="num" style="color:#64748b">${fmtVND(kh)}đ</td>
+      <td>
+        <div style="display:flex;align-items:center;gap:6px;min-width:120px">
+          <div style="flex:1;height:7px;background:#e2e8f0;border-radius:99px;overflow:hidden">
+            <div style="width:${barW}%;height:100%;background:${pbCol(p2)};border-radius:99px"></div>
+          </div>
+          <span style="font-size:11px;font-weight:800;color:${pbCol(p2)};min-width:38px">${p2.toFixed(1)}%</span>
+        </div>
+        <span style="font-size:9px;padding:1px 6px;border-radius:99px;background:${pbBg(p2)};color:${pbCol(p2)};font-weight:700">
+          ${p2>=100?'✓ Đạt':p2>=70?'Gần đạt':'Thấp'}
+        </span>
+      </td>
+      <td class="num">${fmtVND(ord)}${prevOrd!==null?delta(ord,prevOrd):''}</td>
+      <td class="num" style="color:#64748b">${ord>0?fmtVND(Math.round(rev/ord)):0}đ</td>
+      <td class="num" style="color:#3b82f6">${fmtVND(chRev[0])}đ<br><span style="font-size:9px;color:#94a3b8">${pct(chRev[0],rev).toFixed(0)}%</span></td>
+      <td class="num" style="color:#f97316">${fmtVND(chRev[1])}đ<br><span style="font-size:9px;color:#94a3b8">${pct(chRev[1],rev).toFixed(0)}%</span></td>
+      <td class="num" style="color:#22c55e">${fmtVND(chRev[2])}đ<br><span style="font-size:9px;color:#94a3b8">${pct(chRev[2],rev).toFixed(0)}%</span></td>
+      <td class="num" style="color:#dc2626">${fmtVND(disc)}đ<br><span style="font-size:9px;color:#94a3b8">${pct(disc,rev).toFixed(1)}%</span></td>
+      <td style="font-size:10px;font-weight:700;color:#475569">${EMP_FULL[topEmpI]||'--'}<br><span style="font-size:9px;color:#94a3b8;font-weight:400">${fmtVND(activeEmpRevs[topEmpI]||0)}đ</span></td>
+    </tr>`;
+  }
+
+  // Total row
+  rows += `<tr style="background:#1e3a8a;cursor:default">
+    <td style="color:#fff;font-weight:800;font-size:11px">TỔNG<br><span style="font-size:9px;opacity:.7">${dataIdxs.length} tháng</span></td>
+    <td class="num" style="color:#fbbf24;font-weight:900">${fmtVND(totalRev)}đ</td>
+    <td class="num" style="color:rgba(255,255,255,.7)">${fmtVND(totalKH)}đ</td>
+    <td><span style="color:${avgPctAll>=80?'#4ade80':'#f87171'};font-weight:900;font-size:13px">${avgPctAll.toFixed(1)}%</span></td>
+    <td class="num" style="color:#fff;font-weight:700">${fmtVND(totalOrd)}</td>
+    <td class="num" style="color:rgba(255,255,255,.7)">${totalOrd>0?fmtVND(Math.round(totalRev/totalOrd)):0}đ</td>
+    <td class="num" style="color:#93c5fd">${fmtVND(dataIdxs.reduce((s,i)=>s+(CH_REV[i]?CH_REV[i][0]:0),0))}đ</td>
+    <td class="num" style="color:#fdba74">${fmtVND(dataIdxs.reduce((s,i)=>s+(CH_REV[i]?CH_REV[i][1]:0),0))}đ</td>
+    <td class="num" style="color:#86efac">${fmtVND(dataIdxs.reduce((s,i)=>s+(CH_REV[i]?CH_REV[i][2]:0),0))}đ</td>
+    <td class="num" style="color:#fca5a5">${fmtVND(totalDisc)}đ</td>
+    <td style="color:rgba(255,255,255,.5);font-size:10px">--</td>
+  </tr>`;
+
+  document.getElementById('ov-table').innerHTML =
+    `<thead><tr>
+      <th>THÁNG</th>
+      <th class="num">DOANH THU TT</th>
+      <th class="num">KH THÁNG</th>
+      <th>% HOÀN THÀNH</th>
+      <th class="num">SỐ ĐƠN</th>
+      <th class="num">TB/ĐƠN</th>
+      <th class="num" style="color:#93c5fd">ZALO PHÒNG</th>
+      <th class="num" style="color:#fdba74">FANPAGE</th>
+      <th class="num" style="color:#86efac">HOTLINE</th>
+      <th class="num" style="color:#fca5a5">GIẢM GIÁ</th>
+      <th>NHÂN SỰ TOP</th>
+    </tr></thead><tbody>${rows}</tbody>`;
+}
+
 // ── RENDER ALL ────────────────────────────────────────────
 function renderAll(){
   updateInfoBar();
+  if(activeMon < 0){
+    document.getElementById('anv-section').style.display = 'block';
+    document.getElementById('monthly-sections').style.display = 'none';
+    renderAnnualOverview();
+    return;
+  }
+  document.getElementById('anv-section').style.display = 'none';
+  document.getElementById('monthly-sections').style.display = 'block';
+  if(activeMon < 0) return; // Tổng Kết mode – chỉ render annual
+  renderOverview();
   renderKPI();
   renderDaily();
   renderChannel();
@@ -1677,15 +2223,18 @@ async function syncData(){
     if(!res.ok) throw new Error('HTTP '+res.status);
     const d=await res.json();
     if(d.error) throw new Error(d.error);
-    if(d.KH_MONTH)      KH_MONTH=d.KH_MONTH;
-    if(d.DAYS_IN_MONTH) DAYS_IN_MONTH=d.DAYS_IN_MONTH;
-    if(d.MONTH_TOTAL)   MONTH_TOTAL=d.MONTH_TOTAL;
-    if(d.MONTH_ORDERS)  MONTH_ORDERS=d.MONTH_ORDERS;
-    if(d.MONTH_DISC)    MONTH_DISC=d.MONTH_DISC;
-    if(d.CH_REV)        CH_REV=d.CH_REV;
-    if(d.EMP_REV)       EMP_REV=d.EMP_REV;
-    if(d.DAILY)         DAILY=d.DAILY;
-    if(d.EMP_KH_DETAIL) EMP_KH_DETAIL=d.EMP_KH_DETAIL;
+    // Chỉ update nếu data thực sự có giá trị (tránh đè data đúng bằng số 0)
+    const hasRealData = d.MONTH_TOTAL && d.MONTH_TOTAL.some(v=>v>0);
+    if(!hasRealData){ console.warn('[Sync] Dữ liệu trả về trống hoặc toàn 0 – giữ nguyên data hiện tại'); }
+    if(d.KH_MONTH && d.KH_MONTH.some(v=>v>0))     KH_MONTH=d.KH_MONTH;
+    if(d.DAYS_IN_MONTH && d.DAYS_IN_MONTH.length)  DAYS_IN_MONTH=d.DAYS_IN_MONTH;
+    if(hasRealData)                                 MONTH_TOTAL=d.MONTH_TOTAL;
+    if(d.MONTH_ORDERS && d.MONTH_ORDERS.some(v=>v>0)) MONTH_ORDERS=d.MONTH_ORDERS;
+    if(d.MONTH_DISC)   MONTH_DISC=d.MONTH_DISC;
+    if(d.CH_REV && d.CH_REV.some(a=>a.some(v=>v>0))) CH_REV=d.CH_REV;
+    if(d.EMP_REV && d.EMP_REV.some(a=>a.some(v=>v>0))) EMP_REV=d.EMP_REV;
+    if(d.DAILY && Object.keys(d.DAILY).length)     DAILY=d.DAILY;
+    if(d.EMP_KH_DETAIL && d.EMP_KH_DETAIL.some(a=>a.some(v=>v>0))) EMP_KH_DETAIL=d.EMP_KH_DETAIL;
     LAST_UPDATED=d.lastUpdated||new Date().toLocaleString('vi-VN');
     localStorage.setItem('cskh_last_updated',LAST_UPDATED);
     document.getElementById('cdot').className='conn-dot ok';
@@ -1715,6 +2264,35 @@ function exportCSV(){
   URL.revokeObjectURL(url);
 }
 
+// ── AUTO REFRESH (mỗi 60 phút) ───────────────────────────
+let autoRefreshTimer = null;
+function startAutoRefresh(){
+  if(autoRefreshTimer) clearInterval(autoRefreshTimer);
+  if(!SCRIPT_URL) return;
+  autoRefreshTimer = setInterval(()=>{
+    console.log('[AutoRefresh] Đang đồng bộ dữ liệu...');
+    syncData();
+  }, 60 * 60 * 1000); // 60 phút
+  console.log('[AutoRefresh] Đã bật – sẽ tự cập nhật mỗi 60 phút');
+}
+
+// ── COUNTDOWN hiển thị thời gian đến lần refresh tiếp theo
+let countdownTimer = null;
+function startCountdown(){
+  if(countdownTimer) clearInterval(countdownTimer);
+  if(!SCRIPT_URL) return;
+  let remaining = 60 * 60; // giây
+  const el = document.getElementById('refresh-countdown');
+  if(!el) return;
+  countdownTimer = setInterval(()=>{
+    remaining--;
+    if(remaining <= 0){ remaining = 60*60; }
+    const mm = String(Math.floor(remaining/60)).padStart(2,'0');
+    const ss = String(remaining%60).padStart(2,'0');
+    el.textContent = `Tự cập nhật sau ${mm}:${ss}`;
+  }, 1000);
+}
+
 // ── INIT ──────────────────────────────────────────────────
 function init(){
   buildMonthNav();
@@ -1722,7 +2300,11 @@ function init(){
     document.getElementById('cdot').className='conn-dot ok';
   }
   renderAll();
-  if(SCRIPT_URL) syncData();
+  if(SCRIPT_URL){
+    syncData();
+    startAutoRefresh();
+    startCountdown();
+  }
 }
 init();
 </script>
