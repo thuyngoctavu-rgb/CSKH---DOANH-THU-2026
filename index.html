@@ -786,7 +786,7 @@ let EMP_KH_DETAIL = [
   [305389099,258271924,0,0,0,0,0,0,0,0,0,0],
   [305389099,258271924,308879260,284806097,284806097,280555260,269300007,281923444,290339070,302807619,289642070,285253554],
   [305389099,258271924,308879260,284806097,284806097,280555260,269300007,281923444,290339070,302807619,289642070,285253554],
-  [150809432,127541691,152532968,140644986,140644986,138545807,132987658,139221454,143377318,149534627,143033121,140865953],
+  [305389099,258271924,308879260,284806097,284806097,280555260,269300007,281923444,290339070,302807619,289642070,285253554],
   [135728488,114787522,0,0,0,0,0,0,0,0,0,0],
 ];
 // ── BRANCH DATA (54 chi nhánh, tổng hợp T1–T4/2026) ─────
@@ -872,6 +872,12 @@ function setAnnualView(){
   document.getElementById('monthly-sections').style.display = 'none';
   document.getElementById('anv-section').style.display = 'block';
   buildMonthNav();
+  // Destroy đúng ID chart trước khi render lại
+  ['anv-bar-chart'].forEach(id=>{
+    if(charts[id]){charts[id].destroy();delete charts[id];}
+  });
+  // setTimeout để browser layout xong canvas mới vẽ chart
+  setTimeout(()=>{ renderAnnualOverview(); }, 50);
 }
 
 function setMonth(m){
