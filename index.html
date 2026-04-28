@@ -2309,6 +2309,45 @@ function parseVND(s){
   return isNaN(n)?0:Math.round(n);
 }
 
+// ── LƯU / ĐỌC DATA TỪ LOCALSTORAGE ───────────────────
+function saveDataToStorage(){
+  try{
+    const snapshot = {
+      MONTH_TOTAL, MONTH_ORDERS, MONTH_DISC,
+      CH_REV, CH_ORDERS, EMP_REV,
+      DAILY: JSON.parse(JSON.stringify(DAILY)),
+      DAILY_ORDERS: JSON.parse(JSON.stringify(DAILY_ORDERS)),
+      HOURLY_ORDERS: JSON.parse(JSON.stringify(HOURLY_ORDERS)),
+      HOURLY_REV: JSON.parse(JSON.stringify(HOURLY_REV)),
+      savedAt: new Date().toISOString()
+    };
+    localStorage.setItem('cskh_data_snapshot', JSON.stringify(snapshot));
+    console.log('[Storage] Đã lưu data vào localStorage');
+  }catch(e){ console.warn('[Storage] Lỗi lưu:', e); }
+}
+
+function loadDataFromStorage(){
+  try{
+    const raw = localStorage.getItem('cskh_data_snapshot');
+    if(!raw) return false;
+    const d = JSON.parse(raw);
+    // Chỉ áp dụng nếu data lưu MỚI HƠN hardcode (tức đã từng upload CSV)
+    if(!d.savedAt) return false;
+    if(d.MONTH_TOTAL) MONTH_TOTAL = d.MONTH_TOTAL;
+    if(d.MONTH_ORDERS) MONTH_ORDERS = d.MONTH_ORDERS;
+    if(d.MONTH_DISC) MONTH_DISC = d.MONTH_DISC;
+    if(d.CH_REV && d.CH_REV.some(a=>a.some(v=>v>0))) CH_REV = d.CH_REV;
+    if(d.CH_ORDERS) CH_ORDERS = d.CH_ORDERS;
+    if(d.EMP_REV && d.EMP_REV.some(a=>a.some(v=>v>0))) EMP_REV = d.EMP_REV;
+    if(d.DAILY) Object.assign(DAILY, d.DAILY);
+    if(d.DAILY_ORDERS) Object.assign(DAILY_ORDERS, d.DAILY_ORDERS);
+    if(d.HOURLY_ORDERS) Object.assign(HOURLY_ORDERS, d.HOURLY_ORDERS);
+    if(d.HOURLY_REV) Object.assign(HOURLY_REV, d.HOURLY_REV);
+    console.log('[Storage] Đã khôi phục data từ localStorage, lưu lúc:', d.savedAt);
+    return true;
+  }catch(e){ console.warn('[Storage] Lỗi đọc:', e); return false; }
+}
+
 // ── ĐỌC FILE CSV TỪ MÁY (không cần internet) ─────────
 function loadLocalCSV(event){
   const file = event.target.files[0];
@@ -2332,7 +2371,13 @@ function loadLocalCSV(event){
       }
       LAST_UPDATED = new Date().toLocaleString('vi-VN') + ' (file: '+file.name+')';
       localStorage.setItem('cskh_last_updated', LAST_UPDATED);
-      alert('✅ Đã cập nhật từ file: ' + file.name + '\nTổng ' + (allLines.length-1) + ' dòng dữ liệu.');
+      // ✅ Lưu vào localStorage để giữ sau khi F5
+      saveDataToStorage();
+      dot.className = 'conn-dot ok';
+      // Render lại toàn bộ dashboard
+      Object.keys(charts).forEach(id=>{if(charts[id]){charts[id].destroy();delete charts[id];}});
+      renderAll();
+      alert('✅ Đã cập nhật từ file: ' + file.name + '\nTổng ' + (allLines.length-1) + ' dòng dữ liệu.\n📌 Số liệu sẽ giữ nguyên sau khi F5!');
     }catch(err){
       console.error('[CSV Upload] Lỗi:', err);
       alert('❌ Lỗi đọc file: ' + err.message);
@@ -2693,7 +2738,9 @@ function startCountdown(){
 // ── INIT ──────────────────────────────────────────────────
 function init(){
   buildMonthNav();
-  if(LAST_UPDATED) document.getElementById('cdot').className='conn-dot ok';
+  // ✅ Khôi phục data từ localStorage nếu có (ưu tiên hơn hardcode)
+  const restored = loadDataFromStorage();
+  if(restored || LAST_UPDATED) document.getElementById('cdot').className='conn-dot ok';
   renderAll();
   // Auto-fetch đã tắt — dữ liệu được cập nhật qua file CSV
   // setTimeout(()=>{ fetchFromSheet(); }, 2000);
