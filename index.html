@@ -2314,16 +2314,29 @@ function parseVND(s){
 function saveDataToStorage(){
   try{
     const snapshot = {
-      MONTH_TOTAL, MONTH_ORDERS, MONTH_DISC,
-      CH_REV, CH_ORDERS, EMP_REV,
+      MONTH_TOTAL: [...MONTH_TOTAL],
+      MONTH_ORDERS: [...MONTH_ORDERS],
+      MONTH_DISC: [...MONTH_DISC],
+      CH_REV: JSON.parse(JSON.stringify(CH_REV)),
+      CH_ORDERS: JSON.parse(JSON.stringify(CH_ORDERS)),
+      EMP_REV: JSON.parse(JSON.stringify(EMP_REV)),
+      HAS_DATA: [...HAS_DATA],
       DAILY: JSON.parse(JSON.stringify(DAILY)),
       DAILY_ORDERS: JSON.parse(JSON.stringify(DAILY_ORDERS)),
       HOURLY_ORDERS: JSON.parse(JSON.stringify(HOURLY_ORDERS)),
       HOURLY_REV: JSON.parse(JSON.stringify(HOURLY_REV)),
-      savedAt: new Date().toISOString()
+      savedAt: new Date().toISOString(),
+      // Lưu BRANCH_DAILY tháng 5+ để restore sau F5
+      BRANCH_DAILY_T5: (function(){
+        const r={};
+        for(const [k,v] of Object.entries(BRANCH_DAILY)){
+          if(v && v['4']) r[k]=v['4'];
+        }
+        return r;
+      })()
     };
     localStorage.setItem('cskh_data_snapshot', JSON.stringify(snapshot));
-    console.log('[Storage] Đã lưu data vào localStorage');
+    console.log('[Storage] Đã lưu data vào localStorage ('+Object.keys(snapshot.BRANCH_DAILY_T5||{}).length+' chi nhánh T5)');
   }catch(e){ console.warn('[Storage] Lỗi lưu:', e); }
 }
 
@@ -2350,6 +2363,14 @@ function loadDataFromStorage(){
     if(d.DAILY_ORDERS) Object.assign(DAILY_ORDERS, d.DAILY_ORDERS);
     if(d.HOURLY_ORDERS) Object.assign(HOURLY_ORDERS, d.HOURLY_ORDERS);
     if(d.HOURLY_REV) Object.assign(HOURLY_REV, d.HOURLY_REV);
+    // Restore HAS_DATA và BRANCH_DAILY nếu có
+    if(d.HAS_DATA) { for(let m=0;m<12;m++){ if(d.HAS_DATA[m]) HAS_DATA[m]=true; } }
+    if(d.BRANCH_DAILY_T5){
+      for(const [bname,ddata] of Object.entries(d.BRANCH_DAILY_T5)){
+        if(!BRANCH_DAILY[bname]) BRANCH_DAILY[bname]={};
+        BRANCH_DAILY[bname]['4']=ddata;
+      }
+    }
     console.log('[Storage] Đã khôi phục data từ localStorage, lưu lúc:', d.savedAt);
     return true;
   }catch(e){ console.warn('[Storage] Lỗi đọc:', e); return false; }
@@ -2756,16 +2777,22 @@ function startCountdown(){
 
 // ── INIT ──────────────────────────────────────────────────
 function init(){
-  // Xóa snapshot cũ trong localStorage để data hardcode T5 không bị ghi đè
-  try { localStorage.removeItem('cskh_data_snapshot'); } catch(e){}
   buildMonthNav();
-  // Data T5 đã được hardcode trực tiếp vào file – không cần loadDataFromStorage
-  // (tránh bị localStorage cũ ghi đè)
+  // Ưu tiên load data từ localStorage (do người dùng upload CSV)
+  // nếu không có thì dùng data hardcode trong file
+  const restored = loadDataFromStorage();
+  if(restored){
+    // Cập nhật HAS_DATA dựa trên data thực tế đã load
+    for(let m=0;m<12;m++){
+      if(MONTH_TOTAL[m] && MONTH_TOTAL[m]>0) HAS_DATA[m]=true;
+    }
+    document.getElementById('cdot').className='conn-dot ok';
+    console.log('[Init] Đã khôi phục data từ localStorage');
+  } else {
+    console.log('[Init] Dùng data hardcode trong file');
+  }
   if(LAST_UPDATED) document.getElementById('cdot').className='conn-dot ok';
   renderAll();
-  // Auto-fetch đã tắt — dữ liệu được cập nhật qua file CSV
-  // setTimeout(()=>{ fetchFromSheet(); }, 2000);
-  // startAutoRefresh();
   startCountdown();
 }
 init();
