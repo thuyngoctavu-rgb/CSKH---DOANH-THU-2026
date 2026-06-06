@@ -684,14 +684,7 @@ body{font-family:"Segoe UI",system-ui,Arial,sans-serif;background:#f0f4f8;color:
       <div class="branch-filter-bar">
         <div class="branch-filter-row">
           <span class="branch-filter-label">📅 Tháng:</span>
-          <div class="branch-month-tabs" id="branch-month-tabs">
-            <button class="bm-tab active" data-m="-1" onclick="setBranchMonth(-1)">Tất cả</button>
-            <button class="bm-tab" data-m="0"  onclick="setBranchMonth(0)">T1</button>
-            <button class="bm-tab" data-m="1"  onclick="setBranchMonth(1)">T2</button>
-            <button class="bm-tab" data-m="2"  onclick="setBranchMonth(2)">T3</button>
-            <button class="bm-tab" data-m="3"  onclick="setBranchMonth(3)">T4</button>
-            <button class="bm-tab" data-m="4"  onclick="setBranchMonth(4)">T5</button>
-          </div>
+          <div class="branch-month-tabs" id="branch-month-tabs"></div>
         </div>
         <div class="branch-filter-row" id="branch-day-row" style="display:none">
           <span class="branch-filter-label">🗓️ Ngày:</span>
@@ -776,16 +769,16 @@ body{font-family:"Segoe UI",system-ui,Arial,sans-serif;background:#f0f4f8;color:
 // ══════════════════════════════════════════════════════════
 let KH_MONTH      = [1508094315,1275416906,1525329679,1406449863,1406449863,1385458074,1329876576,1392214541,1433773184,1495346265,1430331210,1408659525];
 let DAYS_IN_MONTH = [31,28,31,30,31,30,31,31,30,31,30,31];
-let MONTH_TOTAL   = [982577000,831078760,958499420,774496500,55624000];
-let MONTH_ORDERS  = [6797,5269,6360,5244,0];
-let MONTH_DISC    = [54535000,48240000,56002670,43707400,0];
-let CH_REV   = [[625406000,308609000,48562000],[549832900,230750980,50494880],[684348080,222713340,51438000],[497123500,219860000,57513000],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]];
-let CH_ORDERS= [[3663,2683,451],[3014,1818,437],[4151,1774,435],[2958,1783,503],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]];
-let EMP_REV  = [[218089000,122545000,209496000,211943000,120577000,99927000],[195827700,25292380,219476620,202403880,106847680,81230500],[299386500,0,211633060,212867740,229049120,5563000],[227517350,0,180290000,191041150,175648000,0],[0,0,0,0,0,0]];
+let MONTH_TOTAL   = [982577000,831078760,958499420,774496500,74720000,85770000];
+let MONTH_ORDERS  = [6797,5269,6360,5244,610,578];
+let MONTH_DISC    = [54535000,48240000,56002670,43707400,2565000,4162000];
+let CH_REV   = [[625406000,308609000,48562000],[549832900,230750980,50494880],[684348080,222713340,51438000],[497123500,219860000,57513000],[44025000,25132000,5563000],[49048000,32509000,4213000],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]];
+let CH_ORDERS= [[3663,2683,451],[3014,1818,437],[4151,1774,435],[2958,1783,503],[320,235,55],[310,233,35],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]];
+let EMP_REV  = [[218089000,122545000,209496000,211943000,120577000,99927000],[195827700,25292380,219476620,202403880,106847680,81230500],[299386500,0,211633060,212867740,229049120,5563000],[227517350,0,180290000,191041150,175648000,0],[12439000,0,21242000,26463000,14576000,0],[29246000,0,19765000,27256000,9503000,0]];
 let DAILY    = {"0":{"1":20179000,"2":37730000,"3":36010000,"4":23813000,"5":29379000,"6":30228000,"7":29668000,"8":26796000,"9":39686000,"10":34548000,"11":20531000,"12":36563000,"13":33122000,"14":33597000,"15":35852000,"16":38688000,"17":36419000,"18":16909000,"19":50349000,"20":33933000,"21":26445000,"22":26752000,"23":30541000,"24":32902000,"25":17473000,"26":29554000,"27":36278000,"28":32488000,"29":32988000,"30":34745000,"31":38411000},"1":{"1":18857000,"2":42157000,"3":39205000,"4":32821000,"5":38977000,"6":32342000,"7":36776000,"8":23512000,"9":50677000,"10":59245000,"11":54395000,"12":52821000,"13":38197000,"14":20443000,"15":13124000,"16":6478500,"17":7919680,"18":10438080,"19":7945000,"20":12916640,"21":11980860,"22":12900000,"23":34570000,"24":33759000,"25":29268000,"26":32805000,"27":32369000,"28":44180000},"2":{"1":12796000,"2":32862000,"3":31289000,"4":25637000,"5":28127000,"6":50241470,"7":89135210,"8":34885440,"9":37124300,"10":43644000,"11":28475000,"12":34472000,"13":27129000,"14":35333000,"15":16653000,"16":26805000,"17":23518000,"18":27565000,"19":28202000,"20":32190000,"21":34583000,"22":20667000,"23":27297000,"24":26416000,"25":26723000,"26":29958000,"27":26595000,"28":30671000,"29":16353000,"30":24166000,"31":28987000},"3":{"1":27298000,"2":27028000,"3":27609000,"4":38134000,"5":21895000,"6":28025000,"7":31154000,"8":34162000,"9":26091000,"10":41836000,"11":45632000,"12":21585000,"13":30927000,"14":33295000,"15":28891000,"16":37334000,"17":31477000,"18":35670000,"19":15533000,"20":25321000,"21":31183150,"22":31489350,"23":31407000,"24":41148000,"25":30372000},"4":{"1":15735000,"2":20968000,"3":18921000}};
-const DAILY_ORDERS = {"0":{"1":178,"2":268,"3":271,"4":201,"5":209,"6":219,"7":232,"8":201,"9":268,"10":250,"11":174,"12":250,"13":203,"14":235,"15":228,"16":256,"17":254,"18":170,"19":176,"20":212,"21":188,"22":187,"23":219,"24":216,"25":160,"26":199,"27":263,"28":217,"29":223,"30":247,"31":223},"1":{"1":200,"2":247,"3":233,"4":212,"5":227,"6":186,"7":247,"8":198,"9":299,"10":330,"11":302,"12":319,"13":244,"14":176,"15":132,"16":54,"17":51,"18":64,"19":57,"20":102,"21":100,"22":113,"23":184,"24":207,"25":173,"26":187,"27":197,"28":228},"2":{"1":124,"2":202,"3":203,"4":177,"5":189,"6":235,"7":351,"8":233,"9":220,"10":245,"11":213,"12":236,"13":216,"14":219,"15":151,"16":189,"17":185,"18":210,"19":202,"20":216,"21":236,"22":181,"23":196,"24":202,"25":200,"26":214,"27":198,"28":195,"29":153,"30":176,"31":193},"3":{"1":174,"2":196,"3":199,"4":235,"5":199,"6":200,"7":196,"8":211,"9":188,"10":245,"11":271,"12":184,"13":216,"14":203,"15":207,"16":252,"17":227,"18":215,"19":155,"20":180,"21":206,"22":219,"23":202,"24":256,"25":208}};
-const HOURLY_ORDERS = {"0":{"0":42,"1":106,"7":2,"8":197,"9":629,"10":926,"11":876,"12":657,"13":777,"14":733,"15":468,"16":274,"17":252,"18":331,"19":355,"20":172},"1":{"0":327,"1":86,"7":1,"8":174,"9":550,"10":695,"11":644,"12":505,"13":595,"14":493,"15":377,"16":184,"17":148,"18":188,"19":193,"20":109},"2":{"0":19,"1":52,"7":2,"8":260,"9":645,"10":889,"11":895,"12":599,"13":748,"14":621,"15":415,"16":282,"17":209,"18":280,"19":303,"20":140,"21":1},"3":{"0":1,"7":4,"8":181,"9":536,"10":788,"11":737,"12":485,"13":628,"14":519,"15":338,"16":220,"17":196,"18":204,"19":297,"20":109,"21":1}};
-const HOURLY_REV = {"0":{"0":7421000,"1":19852000,"7":27285000,"8":36454000,"9":111972000,"10":153501000,"11":140964000,"12":97525000,"13":104849000,"14":92919000,"15":50234000,"16":27170000,"17":25600000,"18":31194000,"19":36322000,"20":19315000},"1":{"0":56767000,"1":19729000,"7":62000,"8":36215060,"9":107966860,"10":130557080,"11":112206280,"12":80243520,"13":81169580,"14":71408520,"15":41404960,"16":18505960,"17":15492800,"18":22883100,"19":22550000,"20":13917040},"2":{"0":13908000,"1":8519000,"7":478000,"8":47818090,"9":124398300,"10":170766620,"11":148170440,"12":81651820,"13":107145900,"14":83561750,"15":48375500,"16":29403000,"17":20145000,"18":28859000,"19":31471000,"20":13550000,"21":278000},"3":{"0":101000,"7":1335000,"8":26374000,"9":97461000,"10":145304350,"11":125464000,"12":72451000,"13":89666150,"14":65069000,"15":41882000,"16":22447000,"17":19670000,"18":22495000,"19":29113000,"20":15535000,"21":129000}};
+const DAILY_ORDERS = {"0":{"1":178,"2":268,"3":271,"4":201,"5":209,"6":219,"7":232,"8":201,"9":268,"10":250,"11":174,"12":250,"13":203,"14":235,"15":228,"16":256,"17":254,"18":170,"19":176,"20":212,"21":188,"22":187,"23":219,"24":216,"25":160,"26":199,"27":263,"28":217,"29":223,"30":247,"31":223},"1":{"1":200,"2":247,"3":233,"4":212,"5":227,"6":186,"7":247,"8":198,"9":299,"10":330,"11":302,"12":319,"13":244,"14":176,"15":132,"16":54,"17":51,"18":64,"19":57,"20":102,"21":100,"22":113,"23":184,"24":207,"25":173,"26":187,"27":197,"28":228},"2":{"1":124,"2":202,"3":203,"4":177,"5":189,"6":235,"7":351,"8":233,"9":220,"10":245,"11":213,"12":236,"13":216,"14":219,"15":151,"16":189,"17":185,"18":210,"19":202,"20":216,"21":236,"22":181,"23":196,"24":202,"25":200,"26":214,"27":198,"28":195,"29":153,"30":176,"31":193},"3":{"1":174,"2":196,"3":199,"4":235,"5":199,"6":200,"7":196,"8":211,"9":188,"10":245,"11":271,"12":184,"13":216,"14":203,"15":207,"16":252,"17":227,"18":215,"19":155,"20":180,"21":206,"22":219,"23":202,"24":256,"25":208},"4":{"1":140,"2":170,"3":152,"4":148},"5":{"1":191,"2":183,"3":204}};
+const HOURLY_ORDERS = {"0":{"0":42,"1":106,"7":2,"8":197,"9":629,"10":926,"11":876,"12":657,"13":777,"14":733,"15":468,"16":274,"17":252,"18":331,"19":355,"20":172},"1":{"0":327,"1":86,"7":1,"8":174,"9":550,"10":695,"11":644,"12":505,"13":595,"14":493,"15":377,"16":184,"17":148,"18":188,"19":193,"20":109},"2":{"0":19,"1":52,"7":2,"8":260,"9":645,"10":889,"11":895,"12":599,"13":748,"14":621,"15":415,"16":282,"17":209,"18":280,"19":303,"20":140,"21":1},"3":{"0":1,"7":4,"8":181,"9":536,"10":788,"11":737,"12":485,"13":628,"14":519,"15":338,"16":220,"17":196,"18":204,"19":297,"20":109,"21":1},"4":{"8":26,"9":48,"10":75,"11":72,"12":79,"13":64,"14":60,"15":46,"16":31,"17":34,"18":27,"19":37,"20":11},"5":{"8":18,"9":51,"10":89,"11":76,"12":67,"13":67,"14":81,"15":42,"16":16,"17":14,"18":24,"19":22,"20":11}};
+const HOURLY_REV = {"0":{"0":7421000,"1":19852000,"7":27285000,"8":36454000,"9":111972000,"10":153501000,"11":140964000,"12":97525000,"13":104849000,"14":92919000,"15":50234000,"16":27170000,"17":25600000,"18":31194000,"19":36322000,"20":19315000},"1":{"0":56767000,"1":19729000,"7":62000,"8":36215060,"9":107966860,"10":130557080,"11":112206280,"12":80243520,"13":81169580,"14":71408520,"15":41404960,"16":18505960,"17":15492800,"18":22883100,"19":22550000,"20":13917040},"2":{"0":13908000,"1":8519000,"7":478000,"8":47818090,"9":124398300,"10":170766620,"11":148170440,"12":81651820,"13":107145900,"14":83561750,"15":48375500,"16":29403000,"17":20145000,"18":28859000,"19":31471000,"20":13550000,"21":278000},"3":{"0":101000,"7":1335000,"8":26374000,"9":97461000,"10":145304350,"11":125464000,"12":72451000,"13":89666150,"14":65069000,"15":41882000,"16":22447000,"17":19670000,"18":22495000,"19":29113000,"20":15535000,"21":129000},"4":{"8":2997000,"9":8120000,"10":12666000,"11":9145000,"12":8584000,"13":6827000,"14":6641000,"15":5483000,"16":2982000,"17":3954000,"18":2394000,"19":3649000,"20":1278000},"5":{"8":1978000,"9":7899000,"10":14493000,"11":12800000,"12":12387000,"13":10434000,"14":12646000,"15":3814000,"16":1429000,"17":1339000,"18":2447000,"19":2299000,"20":1805000}};
 let EMP_KH_DETAIL = [
   [305389099,258271924,308879260,284806097,284806097,280555260,269300007,281923444,290339070,302807619,289642070,285253554],
   [305389099,258271924,0,0,0,0,0,0,0,0,0,0],
@@ -808,7 +801,7 @@ const EMP_FULL_LONG= ["Châu Thúy Ngọc","Bá Lộc","Hà Văn Thái Tài","Ng
 const EMP_RESIGNED     = [false,true,false,false,false,true];
 const EMP_RESIGN_MONTH = [null,3,null,null,null,3];
 const MONTH_LABELS = ["Tháng 1","Tháng 2","Tháng 3","Tháng 4","Tháng 5","Tháng 6","Tháng 7","Tháng 8","Tháng 9","Tháng 10","Tháng 11","Tháng 12"];
-const HAS_DATA     = [true,true,true,true,true,false,false,false,false,false,false,false];
+const HAS_DATA     = [true,true,true,true,true,true,false,false,false,false,false,false];
 
 let SCRIPT_URL   = localStorage.getItem('cskh_script_url') || '';
 let LAST_UPDATED = localStorage.getItem('cskh_last_updated') || '';
@@ -818,7 +811,7 @@ function getKhDay(m, d){
   if(KH_DAILY[m] && KH_DAILY[m][d] !== undefined) return KH_DAILY[m][d];
   return KH_MONTH[m] / DAYS_IN_MONTH[m]; // phân bổ đều
 }
-let activeMon    = 3; // 0-based, default T4
+let activeMon    = HAS_DATA.lastIndexOf(true);
 let branchView   = 'total'; // 'total' | 'zalo'
 let branchMonth  = -1;      // -1 = tất cả, 0-3 = T1-T4
 let branchDay    = 0;       // 0 = tất cả ngày, 1-31 = ngày cụ thể
@@ -1525,6 +1518,13 @@ function setBranchView(v){
   renderBranch();
 }
 
+function buildBranchTabs(){
+  var c=document.getElementById('branch-month-tabs'); if(!c) return;
+  var h='<button class="bm-tab active" data-m="-1" onclick="setBranchMonth(-1)">Tất cả</button>';
+  HAS_DATA.forEach(function(ok,i){if(ok)h+='<button class="bm-tab" data-m="'+i+'" onclick="setBranchMonth('+i+')">T'+(i+1)+'</button>';});
+  c.innerHTML=h;
+  c.querySelectorAll('.bm-tab[data-m]').forEach(function(el){el.classList.toggle('active',+el.dataset.m===branchMonth);});
+}
 function setBranchMonth(m){
   branchMonth = m;
   branchDay   = 0; // reset day filter
@@ -1569,39 +1569,31 @@ function onDaySlider(val){
 
 // Get revenue for a branch given current branchMonth/branchDay filters
 function getBranchRev(branchName, field){
-  // field: 'total' | 'zalo' — only used for "tất cả" months with no day filter
-  if(branchMonth === -1 && branchDay === 0){
-    // Full period – use pre-computed totals from BRANCH_DATA
-    const bd = BRANCH_DATA.find(b=>b.name===branchName);
+  var mKey=String(branchMonth), dKey=String(branchDay);
+  if(branchMonth===-1 && branchDay===0){
+    var bd=BRANCH_DATA.find(function(b){return b.name===branchName;});
     return bd ? bd[field] : 0;
   }
-  if(branchMonth === -1 && branchDay > 0){
-    // Specific day across all months – sum from BRANCH_DAILY
-    const daily = BRANCH_DAILY[branchName];
-    if(!daily) return 0;
-    let s = 0;
-    for(let m=0;m<4;m++){
-      if(daily[m] && daily[m][branchDay]) s += daily[m][branchDay];
-    }
+  if(branchMonth===-1 && branchDay>0){
+    var bdA=BRANCH_DAILY[branchName]; if(!bdA) return 0;
+    var s=0;
+    for(var mi=0;mi<12;mi++){var mD=bdA[String(mi)];if(mD&&mD[dKey])s+=mD[dKey];}
     return s;
   }
-  if(branchMonth >= 0 && branchDay === 0){
-    // Specific month, all days – use months array in BRANCH_DATA
-    const bd = BRANCH_DATA.find(b=>b.name===branchName);
-    if(!bd) return 0;
-    // For 'zalo' mode, we don't have monthly zalo breakdown → approximate by zalo% * month_total
-    if(field==='zalo'){
-      const zaloRatio = bd.total>0 ? bd.zalo/bd.total : 0;
-      return Math.round((bd.months[branchMonth]||0) * zaloRatio);
+  if(branchMonth>=0 && branchDay===0){
+    if(branchMonth>=4){
+      var bdM=BRANCH_DAILY[branchName]; if(!bdM||!bdM[mKey]) return 0;
+      var tot=Object.values(bdM[mKey]).reduce(function(s,v){return s+v;},0);
+      if(field==='zalo'){var b2=BRANCH_DATA.find(function(b){return b.name===branchName;});var zr=b2&&b2.total>0?b2.zalo/b2.total:0;return Math.round(tot*zr);}
+      return tot;
     }
-    return bd.months[branchMonth] || 0;
+    var bd3=BRANCH_DATA.find(function(b){return b.name===branchName;}); if(!bd3) return 0;
+    if(field==='zalo'){var zR=bd3.total>0?bd3.zalo/bd3.total:0;return Math.round((bd3.months[branchMonth]||0)*zR);}
+    return bd3.months[branchMonth]||0;
   }
-  // Specific month + specific day – use BRANCH_DAILY
-  const daily = BRANCH_DAILY[branchName];
-  if(!daily) return 0;
-  const mData = daily[branchMonth];
-  if(!mData) return 0;
-  return mData[branchDay] || 0;
+  var bdD=BRANCH_DAILY[branchName]; if(!bdD) return 0;
+  var mData=bdD[mKey]; if(!mData) return 0;
+  return mData[dKey]||0;
 }
 
 function renderBranch(){
@@ -2329,9 +2321,7 @@ function saveDataToStorage(){
       // Lưu BRANCH_DAILY tháng 5+ để restore sau F5
       BRANCH_DAILY_T5: (function(){
         const r={};
-        for(const [k,v] of Object.entries(BRANCH_DAILY)){
-          if(v && v['4']) r[k]=v['4'];
-        }
+        for(const [k,v] of Object.entries(BRANCH_DAILY)){for(const mI in v){if(parseInt(mI)>=4){if(!r[k])r[k]={};r[k][mI]=v[mI];}}}
         return r;
       })()
     };
@@ -2368,7 +2358,7 @@ function loadDataFromStorage(){
     if(d.BRANCH_DAILY_T5){
       for(const [bname,ddata] of Object.entries(d.BRANCH_DAILY_T5)){
         if(!BRANCH_DAILY[bname]) BRANCH_DAILY[bname]={};
-        BRANCH_DAILY[bname]['4']=ddata;
+        for(const mI in ddata){BRANCH_DAILY[bname][mI]=ddata[mI];}
       }
     }
     console.log('[Storage] Đã khôi phục data từ localStorage, lưu lúc:', d.savedAt);
@@ -2659,13 +2649,15 @@ async function _parseRawData(header, allLines){
   }
 
   // Re-render
+  for(let m=0;m<12;m++){if(MONTH_TOTAL[m]&&MONTH_TOTAL[m]>0)HAS_DATA[m]=true;}
+  activeMon=HAS_DATA.lastIndexOf(true);
   document.getElementById('cdot').className='conn-dot ok';
-  LAST_UPDATED = new Date().toLocaleString('vi-VN');
-  localStorage.setItem('cskh_last_updated', LAST_UPDATED);
+  LAST_UPDATED=new Date().toLocaleString('vi-VN');
+  localStorage.setItem('cskh_last_updated',LAST_UPDATED);
   Object.keys(charts).forEach(id=>{if(charts[id]){charts[id].destroy();delete charts[id];}});
   buildMonthNav();
   renderAll();
-  console.log('[Sheet Sync] ✅ Cập nhật hoàn tất từ file dữ liệu thô!');
+  console.log('[Sheet Sync] Hoan tat! Thang moi nhat: T'+(activeMon+1));
 }
 
 // ── Parser file TỔNG HỢP (tháng, kênh, nhân viên) ────────
@@ -2778,24 +2770,192 @@ function startCountdown(){
 // ── INIT ──────────────────────────────────────────────────
 function init(){
   buildMonthNav();
-  // Ưu tiên load data từ localStorage (do người dùng upload CSV)
-  // nếu không có thì dùng data hardcode trong file
-  const restored = loadDataFromStorage();
+  var restored=loadDataFromStorage();
   if(restored){
-    // Cập nhật HAS_DATA dựa trên data thực tế đã load
-    for(let m=0;m<12;m++){
-      if(MONTH_TOTAL[m] && MONTH_TOTAL[m]>0) HAS_DATA[m]=true;
-    }
+    for(var m=0;m<12;m++){if(MONTH_TOTAL[m]&&MONTH_TOTAL[m]>0)HAS_DATA[m]=true;}
+    var lastM=HAS_DATA.lastIndexOf(true);
+    if(lastM>=0) activeMon=lastM;
     document.getElementById('cdot').className='conn-dot ok';
-    console.log('[Init] Đã khôi phục data từ localStorage');
-  } else {
-    console.log('[Init] Dùng data hardcode trong file');
   }
   if(LAST_UPDATED) document.getElementById('cdot').className='conn-dot ok';
   renderAll();
   startCountdown();
 }
 init();
+// PATCH BRANCH_DAILY T5+T6
+(function(){
+  if(!BRANCH_DAILY['CHƠN THÀNH'])BRANCH_DAILY['CHƠN THÀNH']={};
+  BRANCH_DAILY['CHƠN THÀNH']['4']={"1":27000,"2":78000};
+  if(!BRANCH_DAILY['NGUYỄN AN NINH DĨ AN'])BRANCH_DAILY['NGUYỄN AN NINH DĨ AN']={};
+  BRANCH_DAILY['NGUYỄN AN NINH DĨ AN']['4']={"1":2841000,"2":3640000,"3":2892000,"4":2074000};
+  if(!BRANCH_DAILY['VĨNH THẠNH'])BRANCH_DAILY['VĨNH THẠNH']={};
+  BRANCH_DAILY['VĨNH THẠNH']['4']={"1":58000};
+  if(!BRANCH_DAILY['AN TÂY'])BRANCH_DAILY['AN TÂY']={};
+  BRANCH_DAILY['AN TÂY']['4']={"1":1182000,"2":1540000,"3":2194000,"4":2664000};
+  if(!BRANCH_DAILY['PHÚ TÀI'])BRANCH_DAILY['PHÚ TÀI']={};
+  BRANCH_DAILY['PHÚ TÀI']['4']={"1":514000,"2":601000,"3":678000,"4":58000};
+  if(!BRANCH_DAILY['NINH PHƯỚC'])BRANCH_DAILY['NINH PHƯỚC']={};
+  BRANCH_DAILY['NINH PHƯỚC']['4']={"1":1295000,"2":554000,"3":1352000,"4":70000};
+  if(!BRANCH_DAILY['BÌNH CHÂU'])BRANCH_DAILY['BÌNH CHÂU']={};
+  BRANCH_DAILY['BÌNH CHÂU']['4']={"1":182000,"2":363000};
+  if(!BRANCH_DAILY['PHAN RANG'])BRANCH_DAILY['PHAN RANG']={};
+  BRANCH_DAILY['PHAN RANG']['4']={"1":105000,"2":1676000,"3":411000,"4":124000};
+  if(!BRANCH_DAILY['VĨNH AN'])BRANCH_DAILY['VĨNH AN']={};
+  BRANCH_DAILY['VĨNH AN']['4']={"1":276000,"2":193000,"3":103000,"4":76000};
+  if(!BRANCH_DAILY['CÁI TẮC'])BRANCH_DAILY['CÁI TẮC']={};
+  BRANCH_DAILY['CÁI TẮC']['4']={"1":126000,"2":60000,"3":207000};
+  if(!BRANCH_DAILY['MỸ PHƯỚC 2 BẾN CÁT'])BRANCH_DAILY['MỸ PHƯỚC 2 BẾN CÁT']={};
+  BRANCH_DAILY['MỸ PHƯỚC 2 BẾN CÁT']['4']={"1":526000,"2":542000,"3":463000,"4":759000};
+  if(!BRANCH_DAILY['HÀ LAM'])BRANCH_DAILY['HÀ LAM']={};
+  BRANCH_DAILY['HÀ LAM']['4']={"1":458000,"2":1377000,"3":522000,"4":437000};
+  if(!BRANCH_DAILY['ĐOÀN THỊ ĐIỂM XUÂN LỘC'])BRANCH_DAILY['ĐOÀN THỊ ĐIỂM XUÂN LỘC']={};
+  BRANCH_DAILY['ĐOÀN THỊ ĐIỂM XUÂN LỘC']['4']={"1":805000,"2":263000,"3":211000,"4":226000};
+  if(!BRANCH_DAILY['BẾN LỨC'])BRANCH_DAILY['BẾN LỨC']={};
+  BRANCH_DAILY['BẾN LỨC']['4']={"1":176000,"2":709000,"3":314000,"4":1268000};
+  if(!BRANCH_DAILY['PHÚ LỢI THỦ DẦU MỘT'])BRANCH_DAILY['PHÚ LỢI THỦ DẦU MỘT']={};
+  BRANCH_DAILY['PHÚ LỢI THỦ DẦU MỘT']['4']={"1":87000,"3":248000};
+  if(!BRANCH_DAILY['BÌNH TÂN VĨNH LONG'])BRANCH_DAILY['BÌNH TÂN VĨNH LONG']={};
+  BRANCH_DAILY['BÌNH TÂN VĨNH LONG']['4']={"1":400000,"2":464000,"3":268000,"4":117000};
+  if(!BRANCH_DAILY['HỒ THỊ THƯỞNG THỚI LAI'])BRANCH_DAILY['HỒ THỊ THƯỞNG THỚI LAI']={};
+  BRANCH_DAILY['HỒ THỊ THƯỞNG THỚI LAI']['4']={"1":225000,"2":321000,"4":164000};
+  if(!BRANCH_DAILY['BÌNH MINH'])BRANCH_DAILY['BÌNH MINH']={};
+  BRANCH_DAILY['BÌNH MINH']['4']={"1":826000,"2":782000,"3":558000,"4":519000};
+  if(!BRANCH_DAILY['MỸ PHƯỚC BẾN CÁT'])BRANCH_DAILY['MỸ PHƯỚC BẾN CÁT']={};
+  BRANCH_DAILY['MỸ PHƯỚC BẾN CÁT']['4']={"1":501000,"2":805000,"3":1346000,"4":348000};
+  if(!BRANCH_DAILY['MỸ PHƯỚC 3 BẾN CÁT'])BRANCH_DAILY['MỸ PHƯỚC 3 BẾN CÁT']={};
+  BRANCH_DAILY['MỸ PHƯỚC 3 BẾN CÁT']['4']={"1":599000,"2":801000,"3":351000,"4":1932000};
+  if(!BRANCH_DAILY['ĐỨC HÒA TÂY NINH'])BRANCH_DAILY['ĐỨC HÒA TÂY NINH']={};
+  BRANCH_DAILY['ĐỨC HÒA TÂY NINH']['4']={"1":107000,"2":104000,"3":2081000,"4":1368000};
+  if(!BRANCH_DAILY['BÀU BÀNG'])BRANCH_DAILY['BÀU BÀNG']={};
+  BRANCH_DAILY['BÀU BÀNG']['4']={"1":1765000,"2":1554000,"3":717000,"4":441000};
+  if(!BRANCH_DAILY['ĐINH ĐỨC THIỆN BÌNH CHÁNH'])BRANCH_DAILY['ĐINH ĐỨC THIỆN BÌNH CHÁNH']={};
+  BRANCH_DAILY['ĐINH ĐỨC THIỆN BÌNH CHÁNH']['4']={"1":130000,"3":292000,"4":242000};
+  if(!BRANCH_DAILY['Ô MÔN'])BRANCH_DAILY['Ô MÔN']={};
+  BRANCH_DAILY['Ô MÔN']['4']={"1":332000,"2":727000,"3":203000,"4":698000};
+  if(!BRANCH_DAILY['THỚI HÒA BẾN CÁT'])BRANCH_DAILY['THỚI HÒA BẾN CÁT']={};
+  BRANCH_DAILY['THỚI HÒA BẾN CÁT']['4']={"1":135000,"2":688000,"3":761000,"4":1076000};
+  if(!BRANCH_DAILY['TRỊ AN'])BRANCH_DAILY['TRỊ AN']={};
+  BRANCH_DAILY['TRỊ AN']['4']={"1":334000,"2":60000,"3":143000};
+  if(!BRANCH_DAILY['HÙNG VƯƠNG ĐỒNG XOÀI'])BRANCH_DAILY['HÙNG VƯƠNG ĐỒNG XOÀI']={};
+  BRANCH_DAILY['HÙNG VƯƠNG ĐỒNG XOÀI']['4']={"1":58000,"2":89000,"3":78000};
+  if(!BRANCH_DAILY['TÔN ĐỨC THẮNG CAO LÃNH'])BRANCH_DAILY['TÔN ĐỨC THẮNG CAO LÃNH']={};
+  BRANCH_DAILY['TÔN ĐỨC THẮNG CAO LÃNH']['4']={"1":88000,"2":246000,"3":64000,"4":316000};
+  if(!BRANCH_DAILY['CẦU TRÀM'])BRANCH_DAILY['CẦU TRÀM']={};
+  BRANCH_DAILY['CẦU TRÀM']['4']={"1":184000,"3":502000,"4":160000};
+  if(!BRANCH_DAILY['TÂN NINH TÂY NINH'])BRANCH_DAILY['TÂN NINH TÂY NINH']={};
+  BRANCH_DAILY['TÂN NINH TÂY NINH']['4']={"1":1365000,"2":309000};
+  if(!BRANCH_DAILY['CẦN THƠ'])BRANCH_DAILY['CẦN THƠ']={};
+  BRANCH_DAILY['CẦN THƠ']['4']={"1":28000,"2":113000,"3":61000,"4":49000};
+  if(!BRANCH_DAILY['CHỬ ĐỒNG TỬ TÂN BÌNH'])BRANCH_DAILY['CHỬ ĐỒNG TỬ TÂN BÌNH']={};
+  BRANCH_DAILY['CHỬ ĐỒNG TỬ TÂN BÌNH']['4']={"2":247000,"4":27000};
+  if(!BRANCH_DAILY['VĨNH TÂN'])BRANCH_DAILY['VĨNH TÂN']={};
+  BRANCH_DAILY['VĨNH TÂN']['4']={"2":1404000,"3":1378000,"4":1513000};
+  if(!BRANCH_DAILY['THẠNH PHÚ VĨNH CỬU'])BRANCH_DAILY['THẠNH PHÚ VĨNH CỬU']={};
+  BRANCH_DAILY['THẠNH PHÚ VĨNH CỬU']['4']={"2":285000,"4":62000};
+  if(!BRANCH_DAILY['LÊ LỢI LAI VUNG'])BRANCH_DAILY['LÊ LỢI LAI VUNG']={};
+  BRANCH_DAILY['LÊ LỢI LAI VUNG']['4']={"2":119000,"4":26000};
+  if(!BRANCH_DAILY['AN NHƠN'])BRANCH_DAILY['AN NHƠN']={};
+  BRANCH_DAILY['AN NHƠN']['4']={"2":55000};
+  if(!BRANCH_DAILY['TRẦN HOÀNG NA CẦN THƠ'])BRANCH_DAILY['TRẦN HOÀNG NA CẦN THƠ']={};
+  BRANCH_DAILY['TRẦN HOÀNG NA CẦN THƠ']['4']={"2":73000,"3":103000,"4":526000};
+  if(!BRANCH_DAILY['NGUYỄN VĂN KHỐI GÒ VẤP'])BRANCH_DAILY['NGUYỄN VĂN KHỐI GÒ VẤP']={};
+  BRANCH_DAILY['NGUYỄN VĂN KHỐI GÒ VẤP']['4']={"2":83000};
+  if(!BRANCH_DAILY['GÒ CÔNG TÂY'])BRANCH_DAILY['GÒ CÔNG TÂY']={};
+  BRANCH_DAILY['GÒ CÔNG TÂY']['4']={"2":43000};
+  if(!BRANCH_DAILY['TÔN ĐỨC THẮNG LONG THÀNH'])BRANCH_DAILY['TÔN ĐỨC THẮNG LONG THÀNH']={};
+  BRANCH_DAILY['TÔN ĐỨC THẮNG LONG THÀNH']['4']={"3":163000,"4":751000};
+  if(!BRANCH_DAILY['THÍCH QUẢNG ĐỨC LONG KHÁNH'])BRANCH_DAILY['THÍCH QUẢNG ĐỨC LONG KHÁNH']={};
+  BRANCH_DAILY['THÍCH QUẢNG ĐỨC LONG KHÁNH']['4']={"3":71000,"4":442000};
+  if(!BRANCH_DAILY['PHÚ CHÁNH'])BRANCH_DAILY['PHÚ CHÁNH']={};
+  BRANCH_DAILY['PHÚ CHÁNH']['4']={"3":78000,"4":458000};
+  if(!BRANCH_DAILY['TÂN PHƯỚC KHÁNH'])BRANCH_DAILY['TÂN PHƯỚC KHÁNH']={};
+  BRANCH_DAILY['TÂN PHƯỚC KHÁNH']['4']={"3":108000};
+  if(!BRANCH_DAILY['HÒA LẠC HÀ NỘI'])BRANCH_DAILY['HÒA LẠC HÀ NỘI']={};
+  BRANCH_DAILY['HÒA LẠC HÀ NỘI']['4']={"4":105000};
+  if(!BRANCH_DAILY['MỸ PHƯỚC BẾN CÁT'])BRANCH_DAILY['MỸ PHƯỚC BẾN CÁT']={};
+  BRANCH_DAILY['MỸ PHƯỚC BẾN CÁT']['5']={"1":1945000,"2":3694000,"3":1372000};
+  if(!BRANCH_DAILY['LÊ LỢI SÓC TRĂNG'])BRANCH_DAILY['LÊ LỢI SÓC TRĂNG']={};
+  BRANCH_DAILY['LÊ LỢI SÓC TRĂNG']['5']={"1":719000,"2":153000,"3":375000};
+  if(!BRANCH_DAILY['PHAN RANG'])BRANCH_DAILY['PHAN RANG']={};
+  BRANCH_DAILY['PHAN RANG']['5']={"1":1013000,"3":196000};
+  if(!BRANCH_DAILY['TÔN ĐỨC THẮNG LONG THÀNH'])BRANCH_DAILY['TÔN ĐỨC THẮNG LONG THÀNH']={};
+  BRANCH_DAILY['TÔN ĐỨC THẮNG LONG THÀNH']['5']={"1":823000,"2":417000,"3":1393000};
+  if(!BRANCH_DAILY['TÂN NINH TÂY NINH'])BRANCH_DAILY['TÂN NINH TÂY NINH']={};
+  BRANCH_DAILY['TÂN NINH TÂY NINH']['5']={"1":147000,"2":49000};
+  if(!BRANCH_DAILY['HỒ THỊ THƯỞNG THỚI LAI'])BRANCH_DAILY['HỒ THỊ THƯỞNG THỚI LAI']={};
+  BRANCH_DAILY['HỒ THỊ THƯỞNG THỚI LAI']['5']={"1":463000,"2":137000,"3":138000};
+  if(!BRANCH_DAILY['NGUYỄN AN NINH DĨ AN'])BRANCH_DAILY['NGUYỄN AN NINH DĨ AN']={};
+  BRANCH_DAILY['NGUYỄN AN NINH DĨ AN']['5']={"1":2750000,"2":3895000,"3":3205000};
+  if(!BRANCH_DAILY['AN TÂY'])BRANCH_DAILY['AN TÂY']={};
+  BRANCH_DAILY['AN TÂY']['5']={"1":2435000,"2":5577000,"3":2981000};
+  if(!BRANCH_DAILY['NINH PHƯỚC'])BRANCH_DAILY['NINH PHƯỚC']={};
+  BRANCH_DAILY['NINH PHƯỚC']['5']={"1":1360000,"2":742000,"3":538000};
+  if(!BRANCH_DAILY['VĨNH TÂN'])BRANCH_DAILY['VĨNH TÂN']={};
+  BRANCH_DAILY['VĨNH TÂN']['5']={"1":789000,"2":2415000,"3":1057000};
+  if(!BRANCH_DAILY['Ô MÔN'])BRANCH_DAILY['Ô MÔN']={};
+  BRANCH_DAILY['Ô MÔN']['5']={"1":211000,"2":212000,"3":946000};
+  if(!BRANCH_DAILY['ĐOÀN THỊ ĐIỂM XUÂN LỘC'])BRANCH_DAILY['ĐOÀN THỊ ĐIỂM XUÂN LỘC']={};
+  BRANCH_DAILY['ĐOÀN THỊ ĐIỂM XUÂN LỘC']['5']={"1":302000,"2":145000,"3":244000};
+  if(!BRANCH_DAILY['HÀ LAM'])BRANCH_DAILY['HÀ LAM']={};
+  BRANCH_DAILY['HÀ LAM']['5']={"1":1081000,"2":1189000,"3":655000};
+  if(!BRANCH_DAILY['THÍCH QUẢNG ĐỨC LONG KHÁNH'])BRANCH_DAILY['THÍCH QUẢNG ĐỨC LONG KHÁNH']={};
+  BRANCH_DAILY['THÍCH QUẢNG ĐỨC LONG KHÁNH']['5']={"1":752000,"2":669000,"3":296000};
+  if(!BRANCH_DAILY['MỸ PHƯỚC 3 BẾN CÁT'])BRANCH_DAILY['MỸ PHƯỚC 3 BẾN CÁT']={};
+  BRANCH_DAILY['MỸ PHƯỚC 3 BẾN CÁT']['5']={"1":1971000,"2":851000,"3":1523000};
+  if(!BRANCH_DAILY['BÀU BÀNG'])BRANCH_DAILY['BÀU BÀNG']={};
+  BRANCH_DAILY['BÀU BÀNG']['5']={"1":1603000,"2":404000,"3":1671000};
+  if(!BRANCH_DAILY['VĨNH AN'])BRANCH_DAILY['VĨNH AN']={};
+  BRANCH_DAILY['VĨNH AN']['5']={"1":113000};
+  if(!BRANCH_DAILY['BÌNH TÂN VĨNH LONG'])BRANCH_DAILY['BÌNH TÂN VĨNH LONG']={};
+  BRANCH_DAILY['BÌNH TÂN VĨNH LONG']['5']={"1":382000,"2":91000,"3":148000};
+  if(!BRANCH_DAILY['BÌNH MINH'])BRANCH_DAILY['BÌNH MINH']={};
+  BRANCH_DAILY['BÌNH MINH']['5']={"1":372000,"2":1133000,"3":885000};
+  if(!BRANCH_DAILY['PHÚ CHÁNH'])BRANCH_DAILY['PHÚ CHÁNH']={};
+  BRANCH_DAILY['PHÚ CHÁNH']['5']={"1":76000,"2":109000,"3":576000};
+  if(!BRANCH_DAILY['CẦN THƠ'])BRANCH_DAILY['CẦN THƠ']={};
+  BRANCH_DAILY['CẦN THƠ']['5']={"1":414000,"2":70000,"3":170000};
+  if(!BRANCH_DAILY['MỸ PHƯỚC 2 BẾN CÁT'])BRANCH_DAILY['MỸ PHƯỚC 2 BẾN CÁT']={};
+  BRANCH_DAILY['MỸ PHƯỚC 2 BẾN CÁT']['5']={"1":1428000,"2":1552000,"3":3118000};
+  if(!BRANCH_DAILY['VÕ OANH BÌNH THẠNH'])BRANCH_DAILY['VÕ OANH BÌNH THẠNH']={};
+  BRANCH_DAILY['VÕ OANH BÌNH THẠNH']['5']={"1":246000,"3":87000};
+  if(!BRANCH_DAILY['THỚI HÒA BẾN CÁT'])BRANCH_DAILY['THỚI HÒA BẾN CÁT']={};
+  BRANCH_DAILY['THỚI HÒA BẾN CÁT']['5']={"1":534000,"2":609000,"3":1653000};
+  if(!BRANCH_DAILY['ĐỨC HÒA TÂY NINH'])BRANCH_DAILY['ĐỨC HÒA TÂY NINH']={};
+  BRANCH_DAILY['ĐỨC HÒA TÂY NINH']['5']={"1":1238000,"2":416000,"3":3134000};
+  if(!BRANCH_DAILY['PHÚ TÀI'])BRANCH_DAILY['PHÚ TÀI']={};
+  BRANCH_DAILY['PHÚ TÀI']['5']={"1":1418000,"2":553000,"3":743000};
+  if(!BRANCH_DAILY['CÁI TẮC'])BRANCH_DAILY['CÁI TẮC']={};
+  BRANCH_DAILY['CÁI TẮC']['5']={"1":296000,"2":377000};
+  if(!BRANCH_DAILY['TRẦN HOÀNG NA CẦN THƠ'])BRANCH_DAILY['TRẦN HOÀNG NA CẦN THƠ']={};
+  BRANCH_DAILY['TRẦN HOÀNG NA CẦN THƠ']['5']={"1":578000};
+  if(!BRANCH_DAILY['AN NHƠN'])BRANCH_DAILY['AN NHƠN']={};
+  BRANCH_DAILY['AN NHƠN']['5']={"1":313000,"3":166000};
+  if(!BRANCH_DAILY['TRỊ AN'])BRANCH_DAILY['TRỊ AN']={};
+  BRANCH_DAILY['TRỊ AN']['5']={"1":473000,"2":244000,"3":264000};
+  if(!BRANCH_DAILY['ĐINH ĐỨC THIỆN BÌNH CHÁNH'])BRANCH_DAILY['ĐINH ĐỨC THIỆN BÌNH CHÁNH']={};
+  BRANCH_DAILY['ĐINH ĐỨC THIỆN BÌNH CHÁNH']['5']={"1":140000,"2":357000};
+  if(!BRANCH_DAILY['PHÚ LỢI THỦ DẦU MỘT'])BRANCH_DAILY['PHÚ LỢI THỦ DẦU MỘT']={};
+  BRANCH_DAILY['PHÚ LỢI THỦ DẦU MỘT']['5']={"1":466000,"3":645000};
+  if(!BRANCH_DAILY['BẾN LỨC'])BRANCH_DAILY['BẾN LỨC']={};
+  BRANCH_DAILY['BẾN LỨC']['5']={"1":96000,"2":463000,"3":733000};
+  if(!BRANCH_DAILY['CHƠN THÀNH'])BRANCH_DAILY['CHƠN THÀNH']={};
+  BRANCH_DAILY['CHƠN THÀNH']['5']={"1":240000,"3":94000};
+  if(!BRANCH_DAILY['BÌNH CHÂU'])BRANCH_DAILY['BÌNH CHÂU']={};
+  BRANCH_DAILY['BÌNH CHÂU']['5']={"1":54000,"3":515000};
+  if(!BRANCH_DAILY['CẦU TRÀM'])BRANCH_DAILY['CẦU TRÀM']={};
+  BRANCH_DAILY['CẦU TRÀM']['5']={"1":456000,"2":265000,"3":124000};
+  if(!BRANCH_DAILY['TÂN PHƯỚC KHÁNH'])BRANCH_DAILY['TÂN PHƯỚC KHÁNH']={};
+  BRANCH_DAILY['TÂN PHƯỚC KHÁNH']['5']={"1":135000,"2":894000};
+  if(!BRANCH_DAILY['VÕ NGUYÊN GIÁP TRÀ VINH'])BRANCH_DAILY['VÕ NGUYÊN GIÁP TRÀ VINH']={};
+  BRANCH_DAILY['VÕ NGUYÊN GIÁP TRÀ VINH']['5']={"2":36000};
+  if(!BRANCH_DAILY['HÙNG VƯƠNG ĐỒNG XOÀI'])BRANCH_DAILY['HÙNG VƯƠNG ĐỒNG XOÀI']={};
+  BRANCH_DAILY['HÙNG VƯƠNG ĐỒNG XOÀI']['5']={"2":64000};
+  if(!BRANCH_DAILY['GÒ CÔNG TÂY'])BRANCH_DAILY['GÒ CÔNG TÂY']={};
+  BRANCH_DAILY['GÒ CÔNG TÂY']['5']={"2":56000,"3":366000};
+  if(!BRANCH_DAILY['NGUYỄN VĂN LINH BÀ RỊA'])BRANCH_DAILY['NGUYỄN VĂN LINH BÀ RỊA']={};
+  BRANCH_DAILY['NGUYỄN VĂN LINH BÀ RỊA']['5']={"2":89000};
+  console.log('[Patch] T5:44 T6:41 chi nhanh ok');
+})();
 </script>
 </body>
 </html>
