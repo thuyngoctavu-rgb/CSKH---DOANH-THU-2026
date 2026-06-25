@@ -347,6 +347,17 @@ body{font-family:"Segoe UI",system-ui,Arial,sans-serif;background:#f0f4f8;color:
   font-size:12px;font-weight:700;cursor:pointer}
 .kh-btn-save:hover{background:#1d4ed8}
 
+/* ── BRANCH DAILY TABLE ── */
+#branch-daily-table td:first-child, #branch-daily-table th:first-child{
+  position:sticky;left:0;z-index:2;
+}
+#branch-daily-table{border-collapse:separate;border-spacing:0}
+#branch-daily-table th{background:#f8fafc;padding:7px 9px;text-align:left;font-weight:700;
+  color:#64748b;border-bottom:2px solid #e2e8f0;font-size:10px;white-space:nowrap}
+#branch-daily-table td{padding:6px 9px;border-bottom:1px solid #f1f5f9;font-size:11px}
+#branch-daily-table .tot-row td{font-weight:800;border-top:2px solid #1e3a8a;color:#1e3a8a}
+#branch-search:focus{border-color:#3b82f6}
+
 /* ── STAFF TABLE ── */
 .st-perf-bar-wrap{display:flex;align-items:center;gap:6px;min-width:110px}
 .st-perf-bar-bg{flex:1;height:7px;background:#e2e8f0;border-radius:99px;overflow:hidden}
@@ -680,50 +691,88 @@ body{font-family:"Segoe UI",system-ui,Arial,sans-serif;background:#f0f4f8;color:
       <div class="sec-title">Chi Tiết Doanh Thu Theo Chi Nhánh</div>
     </div>
     <div class="sec-body">
-      <!-- Month + Day filter bar -->
+
+      <!-- ── BỘ LỌC ── -->
       <div class="branch-filter-bar">
+        <!-- Hàng 1: Chọn tháng -->
         <div class="branch-filter-row">
           <span class="branch-filter-label">📅 Tháng:</span>
           <div class="branch-month-tabs" id="branch-month-tabs"></div>
         </div>
+        <!-- Hàng 2: Chọn ngày (hiện khi chọn tháng cụ thể) -->
         <div class="branch-filter-row" id="branch-day-row" style="display:none">
           <span class="branch-filter-label">🗓️ Ngày:</span>
-          <div style="display:flex;align-items:center;gap:10px;flex:1;flex-wrap:wrap">
+          <div style="display:flex;align-items:center;gap:8px;flex:1;flex-wrap:wrap">
             <button class="bm-tab active" id="btn-day-all" onclick="setBranchDay(0)">Tất cả ngày</button>
             <input type="range" id="branch-day-slider" min="1" max="31" value="1"
-              oninput="onDaySlider(this.value)" style="flex:1;min-width:120px;max-width:280px;accent-color:#2563eb">
+              oninput="onDaySlider(this.value)" style="flex:1;min-width:120px;max-width:240px;accent-color:#2563eb">
             <span id="branch-day-display" style="font-size:12px;font-weight:800;color:#2563eb;min-width:60px">Ngày 1</span>
+          </div>
+        </div>
+        <!-- Hàng 3: Chế độ xem -->
+        <div class="branch-filter-row">
+          <span class="branch-filter-label">👁 Xem:</span>
+          <div style="display:flex;gap:6px;flex-wrap:wrap">
+            <button class="bm-tab active" id="btn-view-summary" onclick="setBranchViewMode('summary')">📊 Tổng Quan</button>
+            <button class="bm-tab" id="btn-view-daily" onclick="setBranchViewMode('daily')">🗓 Theo Ngày</button>
+          </div>
+          <span style="margin-left:12px;font-size:11px;color:#94a3b8">Kênh:</span>
+          <div style="display:flex;gap:6px">
+            <button class="bm-tab active" id="btn-branch-total" onclick="setBranchView('total')">Tất cả</button>
+            <button class="bm-tab" id="btn-branch-zalo" onclick="setBranchView('zalo')">Zalo</button>
           </div>
         </div>
         <div id="branch-filter-summary" class="branch-filter-summary"></div>
       </div>
 
-      <!-- Highlight cards -->
-      <div class="branch-highlight" id="branch-highlight"></div>
-      <!-- Toggle view -->
-      <div class="branch-toggle">
-        <button class="branch-toggle-btn active" id="btn-branch-total" onclick="setBranchView('total')">📊 Tổng Doanh Thu</button>
-        <button class="branch-toggle-btn" id="btn-branch-zalo" onclick="setBranchView('zalo')">📦 Zalo Phòng (Kênh Ship)</button>
-      </div>
-      <!-- Chart: top branches -->
-      <div class="sub-card">
-        <div class="sub-title">
-          <span class="sub-title-dot" style="background:#eab308"></span>
-          <span id="branch-chart-title">Top 15 Chi Nhánh – Doanh Thu</span>
+      <!-- ── KẾT QUẢ: TỔNG QUAN ── -->
+      <div id="branch-summary-view">
+        <div class="branch-highlight" id="branch-highlight"></div>
+        <div class="sub-card">
+          <div class="sub-title">
+            <span class="sub-title-dot" style="background:#eab308"></span>
+            <span id="branch-chart-title">Top 15 Chi Nhánh – Doanh Thu</span>
+          </div>
+          <div class="chart-h280"><canvas id="branch-bar"></canvas></div>
         </div>
-        <div class="chart-h280"><canvas id="branch-bar"></canvas></div>
-      </div>
-      <!-- Table: all branches -->
-      <div class="sub-card">
-        <div class="sub-title">
-          <span class="sub-title-dot" style="background:#f97316"></span>
-          <span id="branch-table-title">Bảng Chi Tiết Tất Cả Chi Nhánh</span>
+        <div class="sub-card">
+          <div class="sub-title">
+            <span class="sub-title-dot" style="background:#f97316"></span>
+            <span id="branch-table-title">Bảng Chi Tiết Tất Cả Chi Nhánh</span>
+          </div>
+          <div style="overflow-x:auto;max-height:420px;overflow-y:auto">
+            <table class="dtbl" id="branch-table"></table>
+          </div>
         </div>
-        <div style="overflow-x:auto;max-height:420px;overflow-y:auto">
-          <table class="dtbl" id="branch-table"></table>
+        <div class="insight-grid" id="branch-insight"></div>
+      </div>
+
+      <!-- ── KẾT QUẢ: THEO NGÀY ── -->
+      <div id="branch-daily-view" style="display:none">
+        <div class="sub-card">
+          <div class="sub-title" style="justify-content:space-between">
+            <div style="display:flex;align-items:center;gap:8px">
+              <span class="sub-title-dot" style="background:#3b82f6"></span>
+              <span id="branch-daily-title">Doanh Thu Từng Ngày Theo Chi Nhánh</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px">
+              <input type="text" id="branch-search" placeholder="🔍 Tìm chi nhánh..."
+                style="padding:5px 10px;border:1.5px solid #e2e8f0;border-radius:7px;font-size:11px;width:180px;outline:none"
+                oninput="renderBranchDailyTable()">
+              <select id="branch-sort" onchange="renderBranchDailyTable()"
+                style="padding:5px 8px;border:1.5px solid #e2e8f0;border-radius:7px;font-size:11px;outline:none">
+                <option value="total_desc">Tổng ↓</option>
+                <option value="total_asc">Tổng ↑</option>
+                <option value="name_asc">Tên A→Z</option>
+              </select>
+            </div>
+          </div>
+          <div style="overflow-x:auto;overflow-y:auto;max-height:560px">
+            <table class="dtbl" id="branch-daily-table" style="min-width:900px"></table>
+          </div>
         </div>
       </div>
-      <div class="insight-grid" id="branch-insight"></div>
+
     </div>
   </div>
 
@@ -1499,7 +1548,8 @@ function setBranchView(v){
   branchView = v;
   document.getElementById('btn-branch-total').classList.toggle('active', v==='total');
   document.getElementById('btn-branch-zalo').classList.toggle('active',  v==='zalo');
-  renderBranch();
+  if(branchViewMode==='daily') renderBranchDailyTable();
+  else renderBranch();
 }
 
 function buildBranchTabs(){
@@ -1529,7 +1579,8 @@ function setBranchMonth(m){
     document.getElementById('branch-day-display').textContent = 'Ngày 1';
     document.getElementById('btn-day-all').classList.add('active');
   }
-  renderBranch();
+  if(branchViewMode==='daily') renderBranchDailyTable();
+  else renderBranch();
 }
 
 function setBranchDay(d){
@@ -1580,7 +1631,160 @@ function getBranchRev(branchName, field){
   return mData[dKey]||0;
 }
 
+
+// ── CHẾ ĐỘ XEM CHI NHÁNH ────────────────────────────
+let branchViewMode = 'summary'; // 'summary' | 'daily'
+
+function setBranchViewMode(mode){
+  branchViewMode = mode;
+  document.getElementById('btn-view-summary').classList.toggle('active', mode==='summary');
+  document.getElementById('btn-view-daily').classList.toggle('active', mode==='daily');
+  document.getElementById('branch-summary-view').style.display = mode==='summary'?'block':'none';
+  document.getElementById('branch-daily-view').style.display   = mode==='daily'?'block':'none';
+  if(mode==='daily') renderBranchDailyTable();
+  else renderBranch();
+}
+
+function renderBranchDailyTable(){
+  const mIdx = branchMonth; // -1 = tất cả, 0-5 = tháng cụ thể
+  const mKey = String(mIdx);
+  const field = branchView; // 'total' | 'zalo'
+  const search = (document.getElementById('branch-search')||{}).value||'';
+  const sort   = (document.getElementById('branch-sort')||{}).value||'total_desc';
+
+  // Lấy danh sách tháng cần hiển thị
+  const dataIdxs = mIdx===-1
+    ? HAS_DATA.map((h,i)=>h?i:null).filter(v=>v!==null)
+    : [mIdx];
+
+  // Lấy số ngày tối đa trong tháng được chọn
+  const DAYS = [31,28,31,30,31,30,31,31,30,31,30,31];
+
+  // Tiêu đề cột ngày
+  let dayHeaders = '';
+  let dayCols = [];
+
+  if(mIdx === -1){
+    // Tất cả tháng: cột = T1, T2, T3... + Tổng
+    dataIdxs.forEach(mi=>{
+      dayHeaders += '<th style="text-align:right;background:#1e3a8a;color:#fff;white-space:nowrap">T'+(mi+1)+'</th>';
+    });
+    dayHeaders += '<th style="text-align:right;background:#1e293b;color:#fbbf24;white-space:nowrap">TỔNG</th>';
+  } else {
+    // Tháng cụ thể: cột = từng ngày có data
+    const allDays = new Set();
+    Object.values(BRANCH_DAILY).forEach(bdObj=>{
+      const mData = bdObj[mKey];
+      if(mData) Object.keys(mData).forEach(d=>allDays.add(+d));
+    });
+    dayCols = Array.from(allDays).sort((a,b)=>a-b);
+    dayCols.forEach(d=>{
+      dayHeaders += '<th style="text-align:right;min-width:52px;white-space:nowrap">'+d+'</th>';
+    });
+    dayHeaders += '<th style="text-align:right;background:#f8fafc;font-weight:800;white-space:nowrap">TỔNG</th>';
+  }
+
+  // Xây dựng data rows
+  let rows = [];
+  const allBranches = new Set([
+    ...BRANCH_DATA.map(b=>b.name),
+    ...Object.keys(BRANCH_DAILY)
+  ]);
+
+  allBranches.forEach(bname=>{
+    if(search && !bname.toLowerCase().includes(search.toLowerCase())) return;
+    const bdObj = BRANCH_DAILY[bname]||{};
+    const bdInfo = BRANCH_DATA.find(b=>b.name===bname);
+    const zaloRatio = bdInfo&&bdInfo.total>0?bdInfo.zalo/bdInfo.total:0;
+
+    let rowTotal = 0;
+    let colVals = [];
+
+    if(mIdx === -1){
+      // Theo tháng
+      dataIdxs.forEach(mi=>{
+        let v = 0;
+        const mData = bdObj[String(mi)];
+        if(mData) v = Object.values(mData).reduce((s,x)=>s+x,0);
+        if(field==='zalo') v = Math.round(v*zaloRatio);
+        colVals.push(v);
+        rowTotal += v;
+      });
+    } else {
+      // Theo ngày
+      const mData = bdObj[mKey]||{};
+      dayCols.forEach(d=>{
+        let v = mData[String(d)]||0;
+        if(field==='zalo') v = Math.round(v*zaloRatio);
+        colVals.push(v);
+        rowTotal += v;
+      });
+    }
+
+    if(rowTotal>0) rows.push({bname, colVals, rowTotal});
+  });
+
+  // Sắp xếp
+  if(sort==='total_desc') rows.sort((a,b)=>b.rowTotal-a.rowTotal);
+  else if(sort==='total_asc') rows.sort((a,b)=>a.rowTotal-b.rowTotal);
+  else rows.sort((a,b)=>a.bname.localeCompare(b.bname,'vi'));
+
+  // Tiêu đề title
+  const mLabel = mIdx===-1
+    ? 'T1–T'+(HAS_DATA.lastIndexOf(true)+1)+'/2026'
+    : MONTH_LABELS[mIdx]+'/2026';
+  const viewLabel = field==='zalo'?'Zalo Phòng':'Tất cả kênh';
+  document.getElementById('branch-daily-title').textContent =
+    'Doanh Thu Theo Ngày – '+mLabel+' ('+viewLabel+') · '+rows.length+' chi nhánh';
+
+  // Render bảng
+  const pbColor=pct=>pct>=80?'#22c55e':pct>=50?'#f59e0b':'#ef4444';
+  const maxTotal = rows.length>0?rows[0].rowTotal:1;
+
+  // Tổng hàng footer
+  let footerCols = colVals=>colVals.map((_,ci)=>rows.reduce((s,r)=>s+r.colVals[ci],0));
+  const totals = rows.length>0 ? footerCols(rows[0].colVals) : [];
+  const grandTotal = totals.reduce((s,v)=>s+v,0);
+
+  let tbody = '';
+  rows.forEach((r,i)=>{
+    const barW = maxTotal>0?Math.min(r.rowTotal/maxTotal*100,100):0;
+    const cols = r.colVals.map(v=>
+      '<td style="text-align:right;color:'+(v>0?'#1e293b':'#e2e8f0')+'">'+
+      (v>0?fmtVND(v)+'':'–')+'</td>'
+    ).join('');
+    tbody += '<tr style="'+(i%2===0?'background:#fafafa':'')+'">'+
+      '<td style="font-weight:700;color:#1e293b;white-space:nowrap;min-width:160px;position:sticky;left:0;background:'+(i%2===0?'#fafafa':'#fff')+'">'+
+        '<span style="font-size:10px;color:#94a3b8;margin-right:4px">'+(i+1)+'</span>'+r.bname+'</td>'+
+      cols+
+      '<td style="text-align:right;font-weight:800;color:#2563eb;background:#eff6ff">'+
+        '<div style="font-size:11px">'+fmtVND(r.rowTotal)+'đ</div>'+
+        '<div style="width:80px;height:4px;background:#e2e8f0;border-radius:2px;margin:2px 0 0 auto">'+
+          '<div style="width:'+barW+'%;height:100%;background:#3b82f6;border-radius:2px"></div></div>'+
+      '</td>'+
+    '</tr>';
+  });
+
+  // Footer tổng
+  const footCols = totals.map(v=>'<td style="text-align:right;font-weight:700;background:#1e3a8a;color:#fbbf24">'+fmtVND(v)+'</td>').join('');
+  tbody += '<tr class="tot-row">'+
+    '<td style="position:sticky;left:0;background:#1e3a8a;color:#fff;font-weight:800">TỔNG</td>'+
+    footCols+
+    '<td style="text-align:right;background:#1e293b;color:#fbbf24;font-weight:900">'+fmtVND(grandTotal)+'đ</td>'+
+  '</tr>';
+
+  const tbl = document.getElementById('branch-daily-table');
+  if(tbl){
+    tbl.innerHTML = '<thead><tr>'+
+      '<th style="position:sticky;left:0;z-index:3;background:#1e3a8a;color:#fff;min-width:160px">CHI NHÁNH</th>'+
+      dayHeaders+
+    '</tr></thead><tbody>'+tbody+'</tbody>';
+  }
+}
+
 function renderBranch(){
+  // Nếu đang ở chế độ xem ngày thì chuyển qua renderBranchDailyTable
+  if(branchViewMode==='daily'){ renderBranchDailyTable(); return; }
   const isZalo = branchView === 'zalo';
   const field  = isZalo ? 'zalo' : 'total';
 
