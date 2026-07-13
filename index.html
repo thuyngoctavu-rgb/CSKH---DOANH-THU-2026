@@ -2383,22 +2383,42 @@ function saveKH(){
   const days = DAYS_IN_MONTH[m];
   const total= parseFloat(document.getElementById('kh-total-input').value)||0;
 
-  // Lưu KH từng ngày
-  if(!KH_DAILY[m]) KH_DAILY[m]={};
-  for(let d=1;d<=days;d++){
-    const el=document.getElementById('khd-'+d);
-    KH_DAILY[m][d] = (parseFloat(el?.value)||0)*1e6;
+  // Nếu KH tổng thay đổi → xóa KH_DAILY cũ để tránh dùng số cũ
+  if(total>0 && total!==KH_MONTH[m]){
+    KH_MONTH[m]=total;
+    delete KH_DAILY[m]; // Xóa để getKhDay() tính lại từ KH_MONTH mới
   }
 
-  // Cập nhật tổng KH tháng nếu khác
-  if(total>0 && total!==KH_MONTH[m]) KH_MONTH[m]=total;
+  // Lưu KH từng ngày từ modal (có thể người dùng chỉnh tay)
+  const hasCustomDay = Array.from({length:days},(_,i)=>i+1)
+    .some(d=>{
+      const el=document.getElementById('khd-'+d);
+      const v=(parseFloat(el?.value)||0)*1e6;
+      const expected=total/days;
+      return Math.abs(v-expected)>1000; // Có chỉnh tay nếu lệch >1000đ
+    });
 
+  if(hasCustomDay){
+    // Chỉ lưu KH từng ngày nếu người dùng có chỉnh tay
+    if(!KH_DAILY[m]) KH_DAILY[m]={};
+    for(let d=1;d<=days;d++){
+      const el=document.getElementById('khd-'+d);
+      KH_DAILY[m][d]=(parseFloat(el?.value)||0)*1e6;
+    }
+  }
+  // Nếu không chỉnh tay → để getKhDay() tự chia đều từ KH_MONTH mới
+
+  // Lưu cả 2 nơi
   localStorage.setItem('cskh_kh_daily', JSON.stringify(KH_DAILY));
+  saveDataToStorage();
 
   closeKHModal();
-  // Re-render section liên quan
+  // Re-render tất cả để KH kênh + bảng ngày đều cập nhật
   renderKPI();
   renderDaily();
+  renderChannel();
+  renderCompare();
+  renderOverview();
 }
 
 // ══════════════════════════════════════════════════════════
@@ -2493,6 +2513,8 @@ function parseVND(s){
 // ── LƯU / ĐỌC DATA TỪ LOCALSTORAGE ───────────────────
 function saveDataToStorage(){
   try{
+    // BRANCH_DAILY T4+ (index>=3)
+    var bdExtra=(function(){var r={};for(var k in BRANCH_DAILY){var v=BRANCH_DAILY[k];for(var mI in v){if(parseInt(mI)>=3){if(!r[k])r[k]={};r[k][mI]=v[mI];}}}return r;})();
     const snapshot = {
       MONTH_TOTAL: [...MONTH_TOTAL],
       MONTH_ORDERS: [...MONTH_ORDERS],
@@ -2502,12 +2524,13 @@ function saveDataToStorage(){
       EMP_REV: JSON.parse(JSON.stringify(EMP_REV)),
       HAS_DATA: [...HAS_DATA],
       DAILY: JSON.parse(JSON.stringify(DAILY)),
-      DAILY_ORDERS: JSON.parse(JSON.stringify(DAILY_ORDERS)),
-      HOURLY_ORDERS: JSON.parse(JSON.stringify(HOURLY_ORDERS)),
-      HOURLY_REV: JSON.parse(JSON.stringify(HOURLY_REV)),
-      savedAt: new Date().toISOString(),
-      // Lưu BRANCH_DAILY tháng 5+ để restore sau F5
-      BRANCH_DAILY_T5:(function(){var r={};for(var k in BRANCH_DAILY){var v=BRANCH_DAILY[k];for(var mI in v){if(parseInt(mI)>=4){if(!r[k])r[k]={};r[k][mI]=v[mI];}}}return r;})()
+      DAILY_ORDERS: JSON.parse(JSON.stringify(DAILY_ORDERS||{})),
+      HOURLY_ORDERS: JSON.parse(JSON.stringify(HOURLY_ORDERS||{})),
+      HOURLY_REV: JSON.parse(JSON.stringify(HOURLY_REV||{})),
+      KH_MONTH: [...KH_MONTH],
+      KH_DAILY: JSON.parse(JSON.stringify(KH_DAILY||{})),
+      BRANCH_DAILY_T5: bdExtra,
+      savedAt: new Date().toISOString()
     };
     localStorage.setItem('cskh_data_snapshot', JSON.stringify(snapshot));
     console.log('[Storage] Đã lưu data vào localStorage ('+Object.keys(snapshot.BRANCH_DAILY_T5||{}).length+' chi nhánh T5)');
@@ -2537,15 +2560,25 @@ function loadDataFromStorage(){
     if(d.DAILY_ORDERS) Object.assign(DAILY_ORDERS, d.DAILY_ORDERS);
     if(d.HOURLY_ORDERS) Object.assign(HOURLY_ORDERS, d.HOURLY_ORDERS);
     if(d.HOURLY_REV) Object.assign(HOURLY_REV, d.HOURLY_REV);
-    // Restore HAS_DATA và BRANCH_DAILY nếu có
-    if(d.HAS_DATA) { for(let m=0;m<12;m++){ if(d.HAS_DATA[m]) HAS_DATA[m]=true; } }
-    if(d.BRANCH_DAILY_T5){
-      for(const [bname,ddata] of Object.entries(d.BRANCH_DAILY_T5)){
+    // Restore HAS_DATA
+    if(d.HAS_DATA){ for(let m=0;m<12;m++){ if(d.HAS_DATA[m]) HAS_DATA[m]=true; } }
+    // Restore BRANCH_DAILY T4+
+    const bdSrc=d.BRANCH_DAILY_T5||d.BRANCH_DAILY_EXTRA||null;
+    if(bdSrc){
+      for(const [bname,mdata] of Object.entries(bdSrc)){
         if(!BRANCH_DAILY[bname]) BRANCH_DAILY[bname]={};
-        for(const mI in ddata){BRANCH_DAILY[bname][mI]=ddata[mI];}
+        for(const mI in mdata){ BRANCH_DAILY[bname][mI]=mdata[mI]; }
       }
     }
-    console.log('[Storage] Đã khôi phục data từ localStorage, lưu lúc:', d.savedAt);
+    // Restore KẾ HOẠCH – giữ sau F5
+    if(d.KH_MONTH && d.KH_MONTH.some(v=>v>0)){
+      for(let i=0;i<12;i++){ if(d.KH_MONTH[i]>0) KH_MONTH[i]=d.KH_MONTH[i]; }
+    }
+    if(d.KH_DAILY && Object.keys(d.KH_DAILY).length>0){
+      Object.assign(KH_DAILY, d.KH_DAILY);
+      localStorage.setItem('cskh_kh_daily', JSON.stringify(KH_DAILY));
+    }
+    console.log('[Storage] Đã khôi phục data + KH, lưu lúc:', d.savedAt);
     return true;
   }catch(e){ console.warn('[Storage] Lỗi đọc:', e); return false; }
 }
@@ -2962,6 +2995,7 @@ function init(){
     }
   }catch(e){ localStorage.removeItem('cskh_data_snapshot'); }
   var restored=loadDataFromStorage();
+  try{var khRaw=localStorage.getItem('cskh_kh_daily');if(khRaw){var kh=JSON.parse(khRaw);for(var ki in kh){KH_DAILY[ki]=kh[ki];}}}catch(e){}
   if(restored){
     for(var m=0;m<12;m++){if(MONTH_TOTAL[m]&&MONTH_TOTAL[m]>0)HAS_DATA[m]=true;}
     var lastM=HAS_DATA.lastIndexOf(true);
