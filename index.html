@@ -860,6 +860,14 @@ function getKhDay(m, d){
   if(KH_DAILY[m] && KH_DAILY[m][d] !== undefined) return KH_DAILY[m][d];
   return KH_MONTH[m] / DAYS_IN_MONTH[m]; // phân bổ đều
 }
+
+// Tổng KH tháng thực tế: cộng từng ngày trong KH_DAILY nếu có, fallback KH_MONTH
+function getKhMonth(m){
+  if(KH_DAILY[m] && Object.keys(KH_DAILY[m]).length > 0){
+    return Object.values(KH_DAILY[m]).reduce(function(s,v){return s+(v||0);}, 0);
+  }
+  return KH_MONTH[m] || 0;
+}
 let activeMon    = 5; // T6 - tháng mới nhất
 let branchView   = 'total'; // 'total' | 'zalo'
 let branchMonth  = -1;      // -1 = tất cả, 0-3 = T1-T4
@@ -951,7 +959,7 @@ function updateInfoBar(){
   }
   document.getElementById('ib-month').textContent  = MONTH_LABELS[m] + '/2026';
   document.getElementById('ib-orders').textContent = fmtVND(MONTH_ORDERS[m]);
-  document.getElementById('ib-kh').textContent     = fmtVND(KH_MONTH[m]) + 'đ';
+  document.getElementById('ib-kh').textContent     = fmtVND(getKhMonth(m)) + 'đ';
   document.getElementById('footer-sub').textContent =
     'Phòng Chăm Sóc Khách Hàng | Phúc Tea | Cập nhật: ' + (LAST_UPDATED || 'Dữ liệu tĩnh');
 }
@@ -960,7 +968,7 @@ function updateInfoBar(){
 function renderKPI(){
   const m   = activeMon;
   const rev = MONTH_TOTAL[m];
-  const kh  = KH_MONTH[m];
+  const kh  = getKhMonth(m);
   const ord = MONTH_ORDERS[m];
   const disc= MONTH_DISC[m];
   const p   = pct(rev,kh);
@@ -1106,7 +1114,7 @@ function renderDaily(){
   }
   // Totals row
   const totRev = barData.reduce((a,b)=>a+b,0);
-  const totKH  = lineData.reduce((a,b)=>a+b,0);
+  const totKH  = getKhMonth(m); // Tổng KH thực từ KH_DAILY hoặc KH_MONTH
   const totOrd = Object.values(ordD).reduce((a,b)=>a+b,0);
   const totP   = totKH>0?(totRev/totKH*100):0;
   const totConThieu = totKH - totRev;
@@ -1248,7 +1256,7 @@ function renderChannel(){
     labels:CH_NAMES,
     datasets:[
       {label:'Thực Tế',data:chRev,backgroundColor:CH_COLORS.map(c=>c+'cc'),borderRadius:5,borderWidth:0},
-      {label:'KH',data:CH_NAMES.map((_,i)=>Math.round(CH_KH_PCT[i]*KH_MONTH[m])),
+      {label:'KH',data:CH_NAMES.map((_,i)=>Math.round(CH_KH_PCT[i]*getKhMonth(m))),
         backgroundColor:'rgba(148,163,184,.35)',borderRadius:5,borderWidth:0}
     ]
   },options:{responsive:true,maintainAspectRatio:false,
@@ -1284,7 +1292,7 @@ function renderChannel(){
     :'<span class="kbadge kb-red" style="font-size:9px">Thấp</span>';
 
   let rows = CH_NAMES.map((n,i)=>{
-    const kh = Math.round(CH_KH_PCT[i]*KH_MONTH[m]);
+    const kh = Math.round(CH_KH_PCT[i]*getKhMonth(m));
     const p2 = pct(chRev[i],kh);
     const tbDon = chOrd[i]>0?Math.round(chRev[i]/chOrd[i]):0;
     const bw = Math.min(p2,100);
@@ -1305,7 +1313,7 @@ function renderChannel(){
   }).join('');
 
   const totOrd = chOrd.reduce((a,b)=>a+b,0);
-  const totKH  = KH_MONTH[m];
+  const totKH  = getKhMonth(m);
   const totP   = pct(tot,totKH);
   rows += `<tr class="tot-row">
     <td>TỔNG</td>
@@ -1326,9 +1334,9 @@ function renderChannel(){
     </tr></thead><tbody>${rows}</tbody>`;
 
   // Nhận định & Hành động – Channel (month-specific)
-  const zaloP  = pct(chRev[0], KH_MONTH[m]*CH_KH_PCT[0]);
-  const fbP    = pct(chRev[1], KH_MONTH[m]*CH_KH_PCT[1]);
-  const hotP   = pct(chRev[2], KH_MONTH[m]*CH_KH_PCT[2]);
+  const zaloP  = pct(chRev[0], getKhMonth(m)*CH_KH_PCT[0]);
+  const fbP    = pct(chRev[1], getKhMonth(m)*CH_KH_PCT[1]);
+  const hotP   = pct(chRev[2], getKhMonth(m)*CH_KH_PCT[2]);
   const mLabel = MONTH_LABELS[m]+'/2026';
   // vs previous month comparison
   const prevChRev = m>0 ? (CH_REV[m-1]||[0,0,0]) : null;
@@ -1342,7 +1350,7 @@ function renderChannel(){
     `[${mLabel}] <b>Hotline</b>: ${fmtVND(chRev[2])}đ – đạt <b>${hotP.toFixed(1)}%</b> KH · TB đơn ${fmtVND(chOrd[2]>0?Math.round(chRev[2]/chOrd[2]):0)}đ`,
     `[${mLabel}] Kênh mạnh nhất: <b>${bestChName}</b> | Kênh cần chú ý: <b>${worstChName}</b> (${fmtVND(chRev[CH_NAMES.indexOf(worstChName)])}đ)`
   ],[
-    zaloP<100?`Zalo Phòng ${mLabel} còn thiếu <b>${fmtVND(Math.round(KH_MONTH[m]*CH_KH_PCT[0]-chRev[0]))}đ</b> để đạt KH – tăng cường gửi file CS và xử lý đơn nhanh hơn`:`Zalo đã đạt KH ${mLabel} – duy trì nhịp độ và đẩy thêm upsell`,
+    zaloP<100?`Zalo Phòng ${mLabel} còn thiếu <b>${fmtVND(Math.round(getKhMonth(m)*CH_KH_PCT[0]-chRev[0]))}đ</b> để đạt KH – tăng cường gửi file CS và xử lý đơn nhanh hơn`:`Zalo đã đạt KH ${mLabel} – duy trì nhịp độ và đẩy thêm upsell`,
     fbP<80?`Fanpage ${mLabel} đạt ${fbP.toFixed(0)}% KH – tăng tần suất đăng bài, chạy mini game/voucher để kéo tương tác`:`Fanpage ${mLabel} ổn định – thử nghiệm nội dung mới để mở rộng tệp KH`,
     `Tối ưu script Hotline ${mLabel}: tập trung upsell combo/set để nâng giá trị đơn trung bình`,
     `Review phân bổ KH kênh ${mLabel}: Zalo ${(CH_KH_PCT[0]*100).toFixed(0)}% / Fanpage ${(CH_KH_PCT[1]*100).toFixed(0)}% / Hotline ${(CH_KH_PCT[2]*100).toFixed(0)}% – điều chỉnh nếu thực tế lệch nhiều`
@@ -1460,7 +1468,7 @@ function renderCompare(){
       <div class="cmp-mv" style="font-size:10px;color:#cbd5e1">--</div>
       <div class="cmp-mp nd">Chưa có</div>
     </div>`;
-    const p2 = pct(MONTH_TOTAL[m],KH_MONTH[m]);
+    const p2 = pct(MONTH_TOTAL[m],getKhMonth(m));
     const cls= p2>=100?'ok':p2>=70?'warn':'bad';
     return `<div class="cmp-mcard${isAct?' active':''}" onclick="setMonth(${m})">
       <div class="cmp-mn">T${m+1}</div>
@@ -1941,7 +1949,7 @@ function renderAnnualOverview(){
   const totalDisc   = dataIdxs.reduce((s,i)=>s+(MONTH_DISC[i]||0),0);
 
   // Full-year KH (all 12 months, 0 if not set)
-  const fullKH = Array.from({length:12},(_,i)=>KH_MONTH[i]||0);
+  const fullKH = Array.from({length:12},(_,i)=>getKhMonth(i)||0);
   const totalKH_year = fullKH.reduce((a,b)=>a+b,0);
   // Remaining KH = sum of KH for months without data
   const remainKH = Array.from({length:12},(_,i)=>HAS_DATA[i]?0:fullKH[i]).reduce((a,b)=>a+b,0);
@@ -2146,11 +2154,11 @@ function renderOverview(){
 
   // ── Summary cards ─────────────────────────────────────
   const totalRev  = dataIdxs.reduce((s,i)=>s+MONTH_TOTAL[i],0);
-  const totalKH   = dataIdxs.reduce((s,i)=>s+KH_MONTH[i],0);
+  const totalKH   = dataIdxs.reduce((s,i)=>s+getKhMonth(i),0);
   const totalOrd  = dataIdxs.reduce((s,i)=>s+MONTH_ORDERS[i],0);
   const totalDisc = dataIdxs.reduce((s,i)=>s+(MONTH_DISC[i]||0),0);
   const avgPctAll = dataIdxs.length>0
-    ? dataIdxs.reduce((s,i)=>s+pct(MONTH_TOTAL[i],KH_MONTH[i]),0)/dataIdxs.length : 0;
+    ? dataIdxs.reduce((s,i)=>s+pct(MONTH_TOTAL[i],getKhMonth(i)),0)/dataIdxs.length : 0;
   const bestMIdx  = dataIdxs.reduce((a,b)=>MONTH_TOTAL[a]>=MONTH_TOTAL[b]?a:b, dataIdxs[0]);
 
   document.getElementById('ov-summary-row').innerHTML = `
@@ -2206,7 +2214,7 @@ function renderOverview(){
       continue;
     }
     const rev   = MONTH_TOTAL[m];
-    const kh    = KH_MONTH[m];
+    const kh    = getKhMonth(m);
     const p2    = pct(rev,kh);
     const ord   = MONTH_ORDERS[m];
     const disc  = MONTH_DISC[m]||0;
@@ -2311,7 +2319,7 @@ function openKHModal(){
   const m    = activeMon;
   const days = DAYS_IN_MONTH[m];
   document.getElementById('kh-modal-title').textContent = MONTH_LABELS[m] + '/2026';
-  document.getElementById('kh-total-input').value = KH_MONTH[m];
+  document.getElementById('kh-total-input').value = getKhMonth(m);
 
   // Build day grid
   const grid = document.getElementById('kh-day-grid');
@@ -2319,7 +2327,7 @@ function openKHModal(){
   for(let d=1;d<=days;d++){
     const val = KH_DAILY[m]&&KH_DAILY[m][d]!==undefined
       ? (KH_DAILY[m][d]/1e6).toFixed(1)
-      : (KH_MONTH[m]/days/1e6).toFixed(1);
+      : (getKhMonth(m)/days/1e6).toFixed(1);
     html += `<div class="kh-day-cell">
       <div class="day-num">${d}</div>
       <input type="number" id="khd-${d}" value="${val}" step="0.1" min="0"
@@ -2360,7 +2368,7 @@ function clearKH(){
 function updateKHSummary(){
   const m     = activeMon;
   const days  = DAYS_IN_MONTH[m];
-  const total = parseFloat(document.getElementById('kh-total-input').value)||KH_MONTH[m];
+  const total = parseFloat(document.getElementById('kh-total-input').value)||getKhMonth(m);
   let sum = 0;
   for(let d=1;d<=days;d++){
     const el=document.getElementById('khd-'+d);
@@ -2384,8 +2392,8 @@ function saveKH(){
   const total= parseFloat(document.getElementById('kh-total-input').value)||0;
 
   // Nếu KH tổng thay đổi → xóa KH_DAILY cũ để tránh dùng số cũ
-  if(total>0 && total!==KH_MONTH[m]){
-    KH_MONTH[m]=total;
+  if(total>0 && total!==getKhMonth(m)){
+    getKhMonth(m)=total;
     delete KH_DAILY[m]; // Xóa để getKhDay() tính lại từ KH_MONTH mới
   }
 
@@ -2478,7 +2486,7 @@ async function syncData(){
 function exportCSV(){
   const m=activeMon;
   let csv='Ngày,Doanh thu,KH ngày\n';
-  const khDay=KH_MONTH[m]/DAYS_IN_MONTH[m];
+  const khDay=getKhMonth(m)/DAYS_IN_MONTH[m];
   for(let d=1;d<=DAYS_IN_MONTH[m];d++){
     csv+=`${d}/${m+1}/2026,${(DAILY[m]&&DAILY[m][d])||0},${Math.round(khDay)}\n`;
   }
